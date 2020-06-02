@@ -1,6 +1,6 @@
 module.exports = function (sequelize, DataTypes) {
-  const City = sequelize.define("City", {
-    city_name: {
+  const Activity = sequelize.define("Activity", {
+    activity_name: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
@@ -8,18 +8,12 @@ module.exports = function (sequelize, DataTypes) {
         is: /^[a-zA-Z0-9._ ]+$/i,
       },
     },
-    lat: {
-      type: DataTypes.DECIMAL,
+    activity_type: {
+      type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        isNumeric: true,
-      },
-    },
-    lon: {
-      type: DataTypes.DECIMAL,
-      allowNull: false,
-      validate: {
-        isNumeric: true,
+        len: [3, 40],
+        is: /^[a-zA-Z0-9._ ]+$/i,
       },
     },
     image: {
@@ -29,21 +23,17 @@ module.exports = function (sequelize, DataTypes) {
         isUrl: true,
       },
     },
-    status: {
-      type: DataTypes.INTEGER,
+    yelp: {
+      type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        min: 0,
-        max: 2,
-        isNumeric: true,
+        isUrl: true,
       },
     },
+    status: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+    },
   });
-
-  City.associate = function (models) {
-    City.hasMany(models.Activity, {
-      onDelete: "cascade",
-    });
-  };
-  return City;
+  return Activity;
 };
