@@ -44,6 +44,11 @@ module.exports = function (sequelize, DataTypes) {
     City.hasMany(models.Activity, {
       onDelete: "cascade",
     });
+    City.belongsTo(models.Trip, {
+      foreignKey: {
+        allowNull: false,
+      },
+    });
   };
   return City;
 };

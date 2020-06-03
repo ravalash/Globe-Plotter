@@ -35,5 +35,14 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false,
     },
   });
+
+  Activity.associate = function(models) {
+    Activity.belongsTo(models.City, {
+      foreignKey: {
+        allowNull: false
+      }
+    });
+  };
+
   return Activity;
 };
