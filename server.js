@@ -10,10 +10,21 @@ const PORT = process.env.PORT || 8080;
 // Requiring our models for syncing
 const db = require("./models");
 
+//Require express-sessions 
+var session = require("express-session");
+
+// Requiring passport as we've configured it
+var passport = require("./config/passport");
+
 // Sets up the Express app to handle data parsing
 require('dotenv').config();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+// We need to use sessions to keep track of our user's login status
+app.use(session({ secret: "keyboard cat", resave: true, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Static directory
 app.use(express.static("public"));
