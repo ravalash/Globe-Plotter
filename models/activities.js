@@ -42,6 +42,11 @@ module.exports = function (sequelize, DataTypes) {
         allowNull: false
       }
     });
+    Activity.belongsTo(models.User, {
+      foreignKey: {
+        allowNull: false
+      }
+    });
   };
 
   return Activity;
