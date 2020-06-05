@@ -1,0 +1,101 @@
+html {
+    scroll-behavior: smooth;
+}
+
+html, body {
+    margin: 0;
+    background-color: #fffeb3;
+}
+
+.tile {
+    border-radius: 5px
+}
+
+.title {
+    margin-right: 10px;
+    margin-top: 6px;
+    margin-left: 10px;
+    margin-bottom: 6px;
+}
+
+.middle {
+    padding-left: 20%;
+    padding-right: 20%
+}
+
+.hero {
+    background-color: 	#d11141;
+    border-bottom: 5px #6fcb9f solid
+}
+
+.hero-body .container {
+    align-self: center;
+    margin-left: 25%;
+    margin-right: 25%
+}
+
+#login-card {
+    padding: 3%;
+    background-color: #d11141;
+    border: 5px #6fcb9f solid;
+    color: #fffeb3;
+    text-align: center;
+}
+
+.label {
+    color: white;
+}
+
+#city-pic {
+    height: 200px;
+    width: 200px;
+    margin-left: 30%;
+    border-radius: 50%;
+}
+
+.hero .title {
+    color: #fffeb3;
+    font-size: xxx-large;
+    font-style: italic
+}
+
+.section {
+    margin-left: 15%;
+    margin-right: 20%
+}
+
+#past-actions {
+    border-right: 1px gray solid
+}
+
+.choice-card {
+    padding: 8px;
+    width: 100%;
+    border-radius: 25%;
+    box-shadow: 2px 2px grey;
+    color: black
+}
+
+path {
+    fill: #fffeb3
+}
+
+#restaurants {
+    background-color: #00aedb;
+}
+
+#drinks {
+    background-color: #a200ff	
+}
+
+#parks {
+    background-color: #8ec127;
+}
+
+#museums {
+    background-color: #f47835
+}
+
+#current-actions {
+    margin-left: 10px
+}
