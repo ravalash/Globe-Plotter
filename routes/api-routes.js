@@ -28,6 +28,7 @@ module.exports = function (app) {
     } else {
       db.City.findAll({
         where: {
+
           TripId: req.params.TripId,
           UserId: req.user.id
         }
@@ -43,6 +44,7 @@ module.exports = function (app) {
     } else {
       db.Activity.findAll({
         where: {
+
           CityId: req.params.CityId,
           UserId: req.user.id
         }
@@ -58,6 +60,7 @@ module.exports = function (app) {
     } else {
       db.City.findAll({
         where: {
+
           TripId: req.params.TripId,
           status: req.params.status,
           UserId: req.user.id
@@ -68,6 +71,21 @@ module.exports = function (app) {
     }
   });
 
+  //find one city by id:
+  app.get("/api/cities/:cityId", function (req, res) {
+    if (!req.user) {
+      res.json({});
+    } else {
+      db.City.findOne({
+        where: {
+          id: req.params.cityId,
+          UserId: req.user.id
+        }
+      }).then(function (result) {
+        res.json(result);
+      });
+    }
+  });
 
   app.get("/api/user/:user_email", function (req, res) {
     db.User.findOne({
@@ -146,7 +164,7 @@ module.exports = function (app) {
   app.delete("/api/users/:id", function (req, res) {
     db.User.destroy({
       where: {
-        UserId: req.user.id
+        id: req.user.id
       }
     }).then(function (result) {
       res.json(result);
@@ -194,7 +212,7 @@ module.exports = function (app) {
         password: req.body.password
       }, {
       where: {
-        UserId: req.user.id
+        id: req.user.id
       }
     }
     )
@@ -214,7 +232,8 @@ module.exports = function (app) {
 
     }, {
       where: {
-        UserId: req.user.UserId
+        UserId: req.user.id,
+        id: req.params.id
       }
     }
     )
@@ -233,7 +252,8 @@ module.exports = function (app) {
       TripId: req.body.TripId
     }, {
       where: {
-        UserId: req.user.id
+        UserId: req.user.id,
+        id: req.params.id
       }
     })
       .then(function (result) {
@@ -251,7 +271,8 @@ module.exports = function (app) {
       CityId: req.body.CityId
     }, {
       where: {
-        UserId: req.user.id
+        UserId: req.user.id,
+        id: req.params.id
       }
     })
       .then(function (result) {
