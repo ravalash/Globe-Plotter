@@ -3,19 +3,11 @@ html {
 }
 
 html, body {
-    margin: 0;
     background-color: #fffeb3;
 }
 
-.tile {
-    border-radius: 5px
-}
-
-.title {
-    margin-right: 10px;
-    margin-top: 6px;
-    margin-left: 10px;
-    margin-bottom: 6px;
+h1 {
+    font-size: x-large
 }
 
 .middle {
@@ -34,11 +26,60 @@ html, body {
     margin-right: 25%
 }
 
+.navbar {
+    background-color: 	#d11141;
+    border-bottom: 5px #6fcb9f solid;
+    padding-left: 5%;
+    padding-right: 5%
+}
+
+a.navbar-item {
+    color: #F5F4C0;
+}
+
+.title {
+    color: #F5F4C0;
+}
+
+.buffer {
+    height: 80px
+}
+
 #login-card {
     padding: 3%;
     background-color: #d11141;
     border: 5px #6fcb9f solid;
     color: #fffeb3;
+    text-align: center;
+}
+
+#search-card {
+    padding: 3%;
+    background-color: #d11141;
+    border: 5px #6fcb9f solid;
+    color: #fffeb3;
+    text-align: center;
+}
+
+#trip-table {
+    margin-left: 20%;
+    margin-right: 20%
+}
+
+.column h1 {
+    text-align: center;
+}
+
+#trip-card h1 {
+    font-weight: 2
+}
+
+#trip-card {
+    margin: 10px;
+    padding: 3%;
+    background-color: #6fcb9f;
+    border: 5px #d11141 solid;
+    color: black;
     text-align: center;
 }
 
