@@ -4,10 +4,11 @@ var passport = require("../config/passport");
 module.exports = function (app) {
 
   app.post("/api/login", passport.authenticate("local"), function (req, res) {
+    console.log('Login request received')
     res.json(req.user);
   });
 
-  app.get("/api/trips/:userId", function (req, res) {
+  app.get("/api/trips/:UserId", function (req, res) {
     if (!req.user) {
       res.json({});
     } else {
@@ -21,13 +22,14 @@ module.exports = function (app) {
     }
   });
 
-  app.get("/api/cities/:tripId", function (req, res) {
+  app.get("/api/cities/:TripId", function (req, res) {
     if (!req.user) {
       res.json({});
     } else {
       db.City.findAll({
         where: {
-          TripId: req.params.tripId,
+
+          TripId: req.params.TripId,
           UserId: req.user.id
         }
       }).then(function (result) {
@@ -36,14 +38,15 @@ module.exports = function (app) {
     }
   });
 
-  app.get("/api/activities/:cityId", function (req, res) {
+  app.get("/api/activities/:CityId", function (req, res) {
     if (!req.user) {
       res.json({});
     } else {
       db.Activity.findAll({
         where: {
-          CityId: req.params.cityId,
-          UserID: req.user.id
+
+          CityId: req.params.CityId,
+          UserId: req.user.id
         }
       }).then(function (result) {
         res.json(result);
@@ -51,15 +54,16 @@ module.exports = function (app) {
     }
   });
 
-  app.get("/api/cities/:tripId/:status", function (req, res) {
+  app.get("/api/cities/:TripId/:status", function (req, res) {
     if (!req.user) {
       res.json({});
     } else {
       db.City.findAll({
         where: {
-          TripId: req.params.tripId,
+
+          TripId: req.params.TripId,
           status: req.params.status,
-          UserID: req.user.id
+          UserId: req.user.id
         }
       }).then(function (result) {
         res.json(result);
@@ -134,7 +138,7 @@ module.exports = function (app) {
       lon: req.body.lon,
       image: req.body.image,
       status: req.body.status,
-      TripId: req.body.tripId,
+      TripId: req.body.TripId,
       UserId: req.user.id
     })
       .then(function (result) {
@@ -149,7 +153,7 @@ module.exports = function (app) {
       image: req.body.image,
       yelp: req.body.yelp,
       status: req.body.status,
-      CityId: req.body.cityId,
+      CityId: req.body.CityId,
       UserId: req.user.id
     })
       .then(function (result) {
@@ -228,7 +232,8 @@ module.exports = function (app) {
 
     }, {
       where: {
-        UserId: req.user.id
+        UserId: req.user.id,
+        id: req.params.id
       }
     }
     )
@@ -244,10 +249,11 @@ module.exports = function (app) {
       lon: req.body.lon,
       image: req.body.image,
       status: req.body.status,
-      TripId: req.body.tripId
+      TripId: req.body.TripId
     }, {
       where: {
-        UserId: req.user.id
+        UserId: req.user.id,
+        id: req.params.id
       }
     })
       .then(function (result) {
@@ -262,10 +268,11 @@ module.exports = function (app) {
       image: req.body.image,
       yelp: req.body.yelp,
       status: req.body.status,
-      CityId: req.body.cityId
+      CityId: req.body.CityId
     }, {
       where: {
-        UserId: req.user.id
+        UserId: req.user.id,
+        id: req.params.id
       }
     })
       .then(function (result) {
