@@ -1,3 +1,6 @@
+var bcrypt = require("bcryptjs");
+
+
 module.exports = function (sequelize, DataTypes) {
   const User = sequelize.define("User", {
     user_email: {
@@ -22,6 +25,23 @@ module.exports = function (sequelize, DataTypes) {
     User.hasMany(models.Trip, {
       onDelete: "cascade"
     });
+    User.hasMany(models.City, {
+      onDelete: "cascade"
+    });
+    User.hasMany(models.Activity, {
+      onDelete: "cascade"
+    });
+    
+    
   };
+
+  User.prototype.validPassword = function(password) {
+    return bcrypt.compareSync(password, this.password);
+  };
+
+  User.addHook("beforeCreate", function(user) {
+    user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10), null);
+  });
+
   return User;
 };

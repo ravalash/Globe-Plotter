@@ -49,6 +49,11 @@ module.exports = function (sequelize, DataTypes) {
         allowNull: false,
       },
     });
+    City.belongsTo(models.User, {
+      foreignKey: {
+        allowNull: false,
+      },
+    });
   };
   return City;
 };
