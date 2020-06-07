@@ -47,14 +47,28 @@ for (var i = 0; i < trips.length; i += 1) {
     }
 }
 
+async function addTrip(trip_name, start_date, end_date) {
+    return new Promise(async function (resolve, reject) {
+        try {
+            const response = await axios.post("/api/trips", {
+                trip_name: trip_name,
+                start_date: start_date,
+                end_date: end_date
+            });
+            resolve(response);
+        } catch (error) {
+            reject(error);
+        }
+    });
+}
 
-// async function getTrips(userId) {
-//     return new Promise(async function (resolve, reject) {
-//         try {
-//             const response = await axios.get("/api/trips/" + userId);
-//             resolve(response);
-//         } catch (error) {
-//             reject(error);
-//         }
-//     });
-// }
+//Add event listener for new trip button
+$("#newTrip").on("click", async function (event) {
+    event.preventDefault();
+    console.log("you clicked me!");
+    let newTrip = await addTrip("Joes trip", "8/1/2020", "8/31/2020");
+    console.log(newTrip.data.id);
+    sessionStorage.setItem("currentTripId", newTrip.data.id);
+    // for testing purposes go to seach city
+    window.location.replace("/searchcity");
+})
