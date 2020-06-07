@@ -54,26 +54,27 @@ module.exports = function (app) {
     }
   });
 
-  app.get("/api/cities/:TripId/:status", function (req, res) {
-    if (!req.user) {
-      res.json({});
-    } else {
-      db.City.findAll({
-        where: {
+  // app.get("/api/cities/:TripId/:status", function (req, res) {
+  //   if (!req.user) {
+  //     res.json({});
+  //   } else {
+  //     db.City.findAll({
+  //       where: {
 
-          TripId: req.params.TripId,
-          status: req.params.status,
-          UserId: req.user.id
-        }
-      }).then(function (result) {
-        res.json(result);
-      });
-    }
-  });
+  //         TripId: req.params.TripId,
+  //         status: req.params.status,
+  //         UserId: req.user.id
+  //       }
+  //     }).then(function (result) {
+  //       res.json(result);
+  //     });
+  //   }
+  // });
 
   //find one city by id:
   app.get("/api/cities/:cityId", function (req, res) {
     if (!req.user) {
+      console.log("No user!");
       res.json({});
     } else {
       db.City.findOne({

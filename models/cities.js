@@ -2,11 +2,11 @@ module.exports = function (sequelize, DataTypes) {
   const City = sequelize.define("City", {
     city_name: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        len: [3, 40],
-        is: /^[a-zA-Z0-9._ ]+$/i,
-      },
+      allowNull: false
+      // validate: {
+      //   // len: [3, 40],
+      //   // is: /^[a-zA-Z0-9._ ]+$/i,
+      // },
     },
     lat: {
       type: DataTypes.DECIMAL,
