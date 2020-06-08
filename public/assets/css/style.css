@@ -4,6 +4,8 @@ html {
 
 html, body {
     background-color: #fffeb3;
+    font-family: overpass;
+    color: black
 }
 
 h1 {
@@ -16,7 +18,7 @@ h1 {
 }
 
 .hero {
-    background-color: 	#d11141;
+    background-color: 	#CC0033;
     border-bottom: 5px #6fcb9f solid
 }
 
@@ -27,18 +29,18 @@ h1 {
 }
 
 .navbar {
-    background-color: 	#d11141;
-    border-bottom: 5px #6fcb9f solid;
+    background-color: 	#000000;
+    border-bottom: 5px white solid;
     padding-left: 5%;
     padding-right: 5%
 }
 
 a.navbar-item {
-    color: #F5F4C0;
+    color: white;
 }
 
 .title {
-    color: #F5F4C0;
+    color: white;
 }
 
 .buffer {
@@ -47,7 +49,7 @@ a.navbar-item {
 
 #login-card {
     padding: 3%;
-    background-color: #d11141;
+    background-color: #CC0033;
     border: 5px #6fcb9f solid;
     color: #fffeb3;
     text-align: center;
@@ -55,9 +57,10 @@ a.navbar-item {
 
 #search-card {
     padding: 3%;
-    background-color: #d11141;
-    border: 5px #6fcb9f solid;
-    color: #fffeb3;
+    background-color: #009900;
+    border: 5px white solid;
+    border-radius: 5%;
+    color: white;
     text-align: center;
 }
 
@@ -77,8 +80,19 @@ a.navbar-item {
 #trip-card {
     margin: 10px;
     padding: 3%;
-    background-color: #6fcb9f;
-    border: 5px #d11141 solid;
+    background-color: #009900;
+    border: 5px white solid;
+    border-radius: 5%;
+    color: white;
+    text-align: center;
+}
+
+
+#newTrip {
+    margin: 10px;
+    padding: 3%;
+    background-color: #FF6600;
+    border: 2px black solid;
     color: black;
     text-align: center;
 }
