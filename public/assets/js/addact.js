@@ -1,12 +1,15 @@
 //make sure the page is loaded
 //axios cdn will be required in the hbs file
 $(document).ready(function () {
+    //check that the city id has been saved correctly
+    const currentCity = sessionStorage.getItem("currentCityId");
+
     //Functions////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Search Yelp
     async function searchYelp(category, latitude, longitude) {
         return new Promise(async (resolve, reject) => {
             const yelpURL = `https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?latitude=${latitude}&longitude=${longitude}&categories=${category}&sort_by=rating&limit=5`;
-            const yelpKey = YELP_KEY //enter yelp api key here
+            const yelpKey = YELP_KEY;
             try {
                 const response = await axios.get(yelpURL, { headers: { Authorization: `Bearer ${yelpKey}` } });
                 let list = response.data.businesses;
@@ -79,21 +82,26 @@ $(document).ready(function () {
             }]
             try {
                 let activities = await axios.get(`/api/activities/${cityId}`);
+                activities = activities.data;
+                console.log(activities);
                 //transform the resultant array into an array just of the activity types
-                if (activities) activities = activities.map(activity => activity = activity.activity_type);
+                if (activities.length > 0) activities = activities.map(activity => activity = activity.activity_type);
+                console.log(activities);
                 //filter out categories that exist in the db already
-                if (activities) {
+                if (activities.length > 0) {
                     categories = categories.filter(category => {
+                        let alreadyExists = false;
                         activities.forEach(activity => {
                             //if the name of the category matches an existing activity, filter it out.
                             if (category.name === activity)
-                                return false;
+                                alreadyExists = true;
                         })
                         //if the name of the category matches none of the activities, keep it in the array!
-                        return category;
+                        if (alreadyExists) return false;
+                        else return category;
                     })
+                    console.log(categories);
                 }
-                //return the first item in the array that results!
                 resolve(categories[0]);
             } catch (error) {
                 reject(error);
@@ -102,7 +110,7 @@ $(document).ready(function () {
     }
 
     //add an activity
-    async function addAct(activity_name, activity_type, image, yelp, cityId) { //can add phone, address, etc later
+    async function addAct(activity_name, activity_type, image, yelp, status, cityId) { //can add phone, address, etc later
         return new Promise(async function (resolve, reject) {
             try {
                 const response = await axios.post("api/activities", {
@@ -110,7 +118,8 @@ $(document).ready(function () {
                     activity_type: activity_type,
                     image: image,
                     yelp: yelp,
-                    cityId: cityId
+                    status: status,
+                    CityId: cityId
                 })
                 resolve(response);
             } catch (error) {
@@ -121,19 +130,21 @@ $(document).ready(function () {
 
     async function initPage(cityId) {
         let cityInfo = await getCityInfo(cityId);
+        console.log(cityInfo);
         let nextAct = await getNextActivity(cityId);
-        let searchResults = await searchYelp(nextAct.queryTxt, cityInfo.lat, cityInfo.lon);
+        if (!nextAct) window.location.replace("/searchcity");
+        let searchResults = await searchYelp(nextAct.queryTxt, cityInfo.data[0].lat, cityInfo.data[0].lon);
         await displayRes(nextAct.uiTxt, searchResults);
 
-        $(".addBtn").on("click", function (event) {
+        $(".addBtn").on("click", async function (event) {
             event.preventDefault();
-            const index = Number(event.target.parent().attr("data-index"));
+            const index = Number($(event.target).parent().attr("data-index"));
             const addedAct = searchResults[index];
-            let newAct = await addAct(addedAct.name, nextAct.name, addedAct.image, addedAct.yelpURL, cityId);
+            let newAct = await addAct(addedAct.name, nextAct.name, addedAct.image, addedAct.yelpURL, 0, cityId);
             window.location.replace("/addact");
         });
     }
 
     //initialize the page after grabbing the city id from session storage
-    initPage(cityId);
+    initPage(currentCity);
 });

@@ -2,11 +2,11 @@ module.exports = function (sequelize, DataTypes) {
   const Activity = sequelize.define("Activity", {
     activity_name: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        len: [3, 40],
-        is: /^[a-zA-Z0-9._ ]+$/i,
-      },
+      allowNull: false
+      // validate: {
+      //   len: [3, 40],
+      //   is: /^[a-zA-Z0-9._ ]+$/i,
+      // },
     },
     activity_type: {
       type: DataTypes.STRING,
@@ -36,7 +36,7 @@ module.exports = function (sequelize, DataTypes) {
     },
   });
 
-  Activity.associate = function(models) {
+  Activity.associate = function (models) {
     Activity.belongsTo(models.City, {
       foreignKey: {
         allowNull: false
