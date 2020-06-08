@@ -9,7 +9,7 @@ $(document).ready(function () {
     async function searchYelp(category, latitude, longitude) {
         return new Promise(async (resolve, reject) => {
             const yelpURL = `https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?latitude=${latitude}&longitude=${longitude}&categories=${category}&sort_by=rating&limit=5`;
-            const yelpKey = YELP_KEY;
+            const yelpKey = 'PBIBFOUhO_4qmjGG71O7Usz9UrhkELnY6uO7jobzr4JAULnJzdL62SPxOOA4ZafyGrVW7lHCLdc-UawfWg_CKByHBejtRsgYSm8Ae4LKzvng-054oVxiUMfPRcnRXnYx';
             try {
                 const response = await axios.get(yelpURL, { headers: { Authorization: `Bearer ${yelpKey}` } });
                 let list = response.data.businesses;

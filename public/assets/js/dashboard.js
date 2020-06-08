@@ -7,43 +7,61 @@ let userId = "dan"
 // let trips = getTrips(userId)
 var trips = [
     {
-        trip_name: "Buffalo",
+        trip_name: "Western New York",
         start_date: "June 23",
         end_date: "June 28",
-        status: "edit"
+        status: "edit",
+        cities: ["Buffalo", "Rochester", "Syracuse"]
     },
     {
-        trip_name: "Miami",
+        trip_name: "Florida",
         start_date: "July 8",
         end_date: "July 12",
-        status: "edit"
+        status: "edit",
+        cities: ["Miami", "Tampa", "Naples", "Orlando"]
     },
     {
-        trip_name: "Seattle",
+        trip_name: "Pacific Northwest",
         start_date: "June 2",
         end_date: "June 9",
-        status: "inProgress"
+        status: "inProgress",
+        cities: ["Seattle", "Portland", "Aberdeen", "Eugene", "Tacoma", "Vancouver"]
     },
     {
-        trip_name: "Paris",
+        trip_name: "France",
         start_date: "May 20",
         end_date: "May 24",
-        status: "completed"
+        status: "completed",
+        cities: ["Nice", "Paris"]
     }
 ]
 
 for (var i = 0; i < trips.length; i += 1) {
     var currentTrip = trips[i];
-
+    var citiesList = citiesListGenerator(currentTrip.cities)
     // Checks if trip is in edit, in progress, or compelte; sorts accordingly
     if (currentTrip.status == "edit") {
-        plannedList.append('<div class="container" id="trip-card"> <h1>' + currentTrip.trip_name + ' </h1> <p>From ' + currentTrip.start_date + ' to ' + currentTrip.end_date + '</p></div>')
+        plannedList.append('<div class="container" id="trip-card"> <h1><b>' + currentTrip.trip_name + '</b></h1> <p>' + citiesList + '</p> <p>From ' + currentTrip.start_date + ' to ' + currentTrip.end_date + '</p></div>')
     }
     else if (currentTrip.status == "inProgress") {
-        inProgressList.append('<div class="container" id="trip-card"> <h1>' + currentTrip.trip_name + ' </h1> <p>From ' + currentTrip.start_date + ' to ' + currentTrip.end_date + '</p></div>')
+        inProgressList.append('<div class="container" id="trip-card"> <h1><b>' + currentTrip.trip_name + '</b></h1> <p>' + citiesList + '</p> <p>From ' + currentTrip.start_date + ' to ' + currentTrip.end_date + '</p></div>')
     }
     else if (currentTrip.status == "completed") {
-        completedList.append('<div class="container" id="trip-card"> <h1>' + currentTrip.trip_name + ' </h1> <p>From ' + currentTrip.start_date + ' to ' + currentTrip.end_date + '</p></div>')
+        completedList.append('<div class="container" id="trip-card"> <h1><b>' + currentTrip.trip_name + '</b></h1> <p>' + citiesList + '</p> <p>From ' + currentTrip.start_date + ' to ' + currentTrip.end_date + '</p></div>')
+    }
+}
+
+function citiesListGenerator() {
+    var cities = currentTrip.cities
+    var remaining = cities.length - 2
+    if (cities.length == 1) {
+        return cities[0]
+    } else if (cities.length == 2) {
+        return cities[0] + " and " + cities[1]
+    } else if (cities.length == 3) {
+        return cities[0] + ", " + cities[1] + " and 1 more"
+    } else {
+        return cities[0] + ", " + cities[1] + " and " + remaining + " more"
     }
 }
 
