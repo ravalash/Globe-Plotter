@@ -1,37 +1,45 @@
-//require express and create a router
-const express = require("express");
-const router = express.Router();
+// Requiring path to so we can use relative routes to our HTML files
+const path = require("path");
 
-router.get("/", (req, res) => {
+// Requiring our custom middleware for checking if a user is logged in
+const isAuthenticated = require("../config/middleware/isAuthenticated");
+
+module.exports = function (app) {
+  app.get("/", (req, res) => {
+    if (req.user) {
+      res.redirect("/dashboard");
+    }
     res.render("index");
-});
+  });
 
-router.get("/signup", (req, res) => {
+  app.get("/signup", (req, res) => {
+    if (req.user) {
+      res.redirect("/dashboard");
+    }
     res.render("signup");
-});
+  });
 
-router.get("/dashboard", (req, res) => {
+  app.get("/dashboard", isAuthenticated, (req, res) => {
     res.render("dashboard");
-});
+  });
 
-router.get("/edittrip", (req, res) => {
+  app.get("/edittrip", isAuthenticated, (req, res) => {
     res.render("edittrip");
-});
+  });
 
-router.get("/searchcity", (req, res) => {
+  app.get("/searchcity", isAuthenticated, (req, res) => {
     res.render("searchcity");
-});
+  });
 
-router.get("/addact", (req, res) => {
+  app.get("/addact", isAuthenticated, (req, res) => {
     res.render("addact");
-});
+  });
 
-router.get("/currenttrip", (req, res) => {
+  app.get("/currenttrip", isAuthenticated, (req, res) => {
     res.render("currenttrip");
-});
+  });
 
-router.get("/comptrip", (req, res) => {
+  app.get("/comptrip", isAuthenticated, (req, res) => {
     res.render("comptrip");
-});
-
-module.exports = router;
+  });
+};
