@@ -4,17 +4,16 @@ var passport = require("../config/passport");
 module.exports = function (app) {
 
   app.post("/api/login", passport.authenticate("local"), function (req, res) {
-    console.log('Login request received')
     res.json(req.user);
   });
 
-  app.get("/api/trips/:UserId", function (req, res) {
+  app.get("/api/trips/:userId", function (req, res) {
     if (!req.user) {
       res.json({});
     } else {
       db.Trip.findAll({
         where: {
-          UserId: req.user.id
+          userId: req.user.id
         }
       }).then(function (result) {
         res.json(result);
@@ -22,15 +21,14 @@ module.exports = function (app) {
     }
   });
 
-  app.get("/api/cities/:TripId", function (req, res) {
+  app.get("/api/cities/:tripId", function (req, res) {
     if (!req.user) {
       res.json({});
     } else {
       db.City.findAll({
         where: {
-
-          TripId: req.params.TripId,
-          UserId: req.user.id
+          tripId: req.params.tripId,
+          userId: req.user.id
         }
       }).then(function (result) {
         res.json(result);
@@ -38,15 +36,14 @@ module.exports = function (app) {
     }
   });
 
-  app.get("/api/activities/:CityId", function (req, res) {
+  app.get("/api/activities/:cityId", function (req, res) {
     if (!req.user) {
       res.json({});
     } else {
       db.Activity.findAll({
         where: {
-
-          CityId: req.params.CityId,
-          UserId: req.user.id
+          cityId: req.params.cityId,
+          userID: req.user.id
         }
       }).then(function (result) {
         res.json(result);
@@ -54,16 +51,15 @@ module.exports = function (app) {
     }
   });
 
-  app.get("/api/cities/:TripId/:status", function (req, res) {
+  app.get("/api/cities/:tripId/:status", function (req, res) {
     if (!req.user) {
       res.json({});
     } else {
       db.City.findAll({
         where: {
-
-          TripId: req.params.TripId,
+          tripId: req.params.tripId,
           status: req.params.status,
-          UserId: req.user.id
+          userID: req.user.id
         }
       }).then(function (result) {
         res.json(result);
@@ -71,27 +67,12 @@ module.exports = function (app) {
     }
   });
 
-  //find one city by id:
-  app.get("/api/cities/:cityId", function (req, res) {
-    if (!req.user) {
-      res.json({});
-    } else {
-      db.City.findOne({
-        where: {
-          id: req.params.cityId,
-          UserId: req.user.id
-        }
-      }).then(function (result) {
-        res.json(result);
-      });
-    }
-  });
 
   app.get("/api/user/:user_email", function (req, res) {
     db.User.findOne({
       where: {
         user_email: req.params.user_email,
-        id: req.user.id
+        userID: req.user.id
       }
     }).then(function (result) {
       res.json(result);
@@ -104,17 +85,16 @@ module.exports = function (app) {
   app.post("/api/users", function (req, res) {
     console.log("Post request made");
     console.log(req.body.user_email + " " + req.body.password);
-    db.User.create(
-      {
+    db.User.create({
         user_email: req.body.user_email,
         password: req.body.password
-      }
-      // req.body
-    )
+      })
       .then(function (result) {
-        res.json(result);
-      });
-
+          res.json(result);
+        })
+        .catch(function(err) {
+          res.status(401).json(err);
+        });
   });
 
 
@@ -124,7 +104,7 @@ module.exports = function (app) {
       trip_name: req.body.trip_name,
       start_date: req.body.start_date,
       end_date: req.body.end_date,
-      UserId: req.user.id
+      userID: req.user.id
     })
       .then(function (result) {
         res.json(result);
@@ -138,8 +118,8 @@ module.exports = function (app) {
       lon: req.body.lon,
       image: req.body.image,
       status: req.body.status,
-      TripId: req.body.TripId,
-      UserId: req.user.id
+      tripId: req.body.tripId,
+      userID: req.user.id
     })
       .then(function (result) {
         res.json(result);
@@ -153,10 +133,11 @@ module.exports = function (app) {
       image: req.body.image,
       yelp: req.body.yelp,
       status: req.body.status,
-      CityId: req.body.CityId,
-      UserId: req.user.id
+      cityId: req.body.cityId,
+      userID: req.user.id
     })
       .then(function (result) {
+        res.redirect("/dashboard");
         res.json(result);
       });
   });
@@ -164,7 +145,7 @@ module.exports = function (app) {
   app.delete("/api/users/:id", function (req, res) {
     db.User.destroy({
       where: {
-        id: req.user.id
+        userID: req.user.id
       }
     }).then(function (result) {
       res.json(result);
@@ -175,7 +156,7 @@ module.exports = function (app) {
     db.Trip.destroy({
       where: {
         id: req.params.id,
-        UserId: req.user.id
+        userID: req.user.id
       }
     }).then(function (result) {
       res.json(result);
@@ -186,7 +167,7 @@ module.exports = function (app) {
     db.City.destroy({
       where: {
         id: req.params.id,
-        UserId: req.user.id
+        userID: req.user.id
       }
     }).then(function (result) {
       res.json(result);
@@ -197,7 +178,7 @@ module.exports = function (app) {
     db.Activity.destroy({
       where: {
         id: req.params.id,
-        UserId: req.user.id
+        userID: req.user.id
       }
     }).then(function (result) {
       res.json(result);
@@ -212,7 +193,7 @@ module.exports = function (app) {
         password: req.body.password
       }, {
       where: {
-        id: req.user.id
+        userID: req.user.id
       }
     }
     )
@@ -232,8 +213,7 @@ module.exports = function (app) {
 
     }, {
       where: {
-        UserId: req.user.id,
-        id: req.params.id
+        userId: req.user.userId
       }
     }
     )
@@ -249,11 +229,10 @@ module.exports = function (app) {
       lon: req.body.lon,
       image: req.body.image,
       status: req.body.status,
-      TripId: req.body.TripId
+      tripId: req.body.tripId
     }, {
       where: {
-        UserId: req.user.id,
-        id: req.params.id
+        userID: req.user.id
       }
     })
       .then(function (result) {
@@ -268,11 +247,10 @@ module.exports = function (app) {
       image: req.body.image,
       yelp: req.body.yelp,
       status: req.body.status,
-      CityId: req.body.CityId
+      cityId: req.body.cityId
     }, {
       where: {
-        UserId: req.user.id,
-        id: req.params.id
+        userID: req.user.id
       }
     })
       .then(function (result) {
