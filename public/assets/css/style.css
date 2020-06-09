@@ -3,18 +3,32 @@ html {
 }
 
 html, body {
-    background-color: #fffeb3;
     font-family: overpass;
-    color: black
+    color: black;
+}
+
+
+.section {
+    margin-left: 10%;
+    margin-right: 10%
 }
 
 h1 {
     font-size: x-large
 }
 
+.wrapper {
+    text-align: center
+}
+
 .middle {
     padding-left: 20%;
     padding-right: 20%
+}
+
+.padded {
+    padding-left: 20%;
+    padding-righT: 20%
 }
 
 .hero {
@@ -49,9 +63,9 @@ a.navbar-item {
 
 #login-card {
     padding: 3%;
-    background-color: #CC0033;
-    border: 5px #6fcb9f solid;
-    color: #fffeb3;
+    background-color: #0000FF;
+    border: 5px white solid;
+    color: white;
     text-align: center;
 }
 

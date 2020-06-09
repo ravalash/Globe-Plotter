@@ -37,6 +37,15 @@ $(document).ready(function () {
         });
     }
 
+    // //Get a city's image 
+    // function getCityImage(placeName) {
+    //     let query = wikiQuery()
+    //     let URL = "https://en.wikipedia.org/w/api.php?action=query&titles=" + query + "&prop=images"
+    //     $.get(URL, function (data, status) {
+    //         console.log(data)
+    //     }, 'html');
+    // }
+
     //Post a new city
     async function addCity(city_name, lat, lon, image, status, tripId) {
         return new Promise(async function (resolve, reject) {
@@ -74,8 +83,10 @@ $(document).ready(function () {
             console.log(cityData);
             //use object destructuring to create variables to feed to the addCity function
             const [{ placeName }, { lat }, { lon }] = Array(3).fill(cityData);
-            console.log(placeName, lat, lon, tripId);
-            let newCity = await addCity(placeName, lat, lon, "testimagestring.com", 0, tripId);
+            console.log(placeName);
+            // let cityImage = await getCityImage(placeName)
+            let newCity = await addCity(placeName, lat, lon, cityImage, 0, tripId);
+
             //save the new city's id in session storage and move on to adding activities
             sessionStorage.setItem("currentCityId", newCity.data.id);
             window.location.replace("/addact");
