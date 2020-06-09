@@ -5,6 +5,9 @@ html {
 html, body {
     font-family: overpass;
     color: black;
+        background-image: url('../imgs/dashboard.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
 }
 
 .section {
@@ -120,7 +123,7 @@ a.navbar-item {
     text-align: center;
 }
 
-#newTrip {
+.button-card {
     margin: 10px;
     padding: 3%;
     background-color: #FF6600;
