@@ -7,7 +7,6 @@ html, body {
     color: black;
 }
 
-
 .section {
     margin-left: 10%;
     margin-right: 10%
@@ -46,11 +45,31 @@ h1 {
     background-color: 	#000000;
     border-bottom: 5px white solid;
     padding-left: 5%;
-    padding-right: 5%
+    padding-right: 5%;
+    height: 120px
+}
+
+.navbar-item img {
+    max-height: 100px
+}
+
+.navbar-menu {
+    background-color: black
+}
+
+a.navbar-item:hover {
+    background-color: white;
+    color: black
 }
 
 a.navbar-item {
     color: white;
+    background-color: black;
+    border: 0px
+}
+
+#burger {
+    background-color: white;
 }
 
 .title {
@@ -58,7 +77,7 @@ a.navbar-item {
 }
 
 .buffer {
-    height: 80px
+    height: 150px
 }
 
 #login-card {
@@ -100,7 +119,6 @@ a.navbar-item {
     color: white;
     text-align: center;
 }
-
 
 #newTrip {
     margin: 10px;
