@@ -8,7 +8,7 @@ module.exports = function (app) {
   });
 
   //get trips by user id
-  app.get("/api/trips/:userId", function (req, res) {
+  app.get("/api/trips/:UserId", function (req, res) {
     if (!req.user) {
       res.json({});
     } else {
@@ -39,13 +39,13 @@ module.exports = function (app) {
   });
 
   //Get cities by trip id (needed to differentiate this from the cities by city id route)
-  app.get("/api/cities/bytrip/:tripId", function (req, res) {
+  app.get("/api/cities/bytrip/:TripId", function (req, res) {
     if (!req.user) {
       res.json({});
     } else {
       db.City.findAll({
         where: {
-          TripId: req.params.tripId,
+          TripId: req.params.TripId,
           UserId: req.user.id
         }
       }).then(function (result) {
@@ -55,14 +55,14 @@ module.exports = function (app) {
   });
 
   //get activities by city
-  app.get("/api/activities/:cityId", function (req, res) {
+  app.get("/api/activities/:CityId", function (req, res) {
     if (!req.user) {
       res.json({});
     } else {
       db.Activity.findAll({
         where: {
-          CityId: req.params.cityId,
-          UserID: req.user.id
+          CityId: req.params.CityId,
+          UserId: req.user.id
         }
       }).then(function (result) {
         res.json(result);
@@ -71,14 +71,14 @@ module.exports = function (app) {
   });
 
   //find one city by id:
-  app.get("/api/cities/:cityId", function (req, res) {
+  app.get("/api/cities/:CityId", function (req, res) {
     if (!req.user) {
       console.log("No user!");
       res.json({});
     } else {
       db.City.findOne({
         where: {
-          id: req.params.cityId,
+          id: req.params.CityId,
           UserId: req.user.id
         }
       }).then(function (result) {
@@ -92,7 +92,7 @@ module.exports = function (app) {
     db.User.findOne({
       where: {
         user_email: req.params.user_email,
-        UserID: req.user.id
+        UserId: req.user.id
       }
     }).then(function (result) {
       res.json(result);
@@ -239,7 +239,7 @@ module.exports = function (app) {
 
     }, {
       where: {
-        UserId: req.user.userId
+        UserId: req.user.UserId
       }
     }
     )
@@ -256,7 +256,7 @@ module.exports = function (app) {
       lon: req.body.lon,
       image: req.body.image,
       status: req.body.status,
-      TripId: req.body.tripId
+      TripId: req.body.TripId
     }, {
       where: {
         UserId: req.user.id
@@ -275,7 +275,7 @@ module.exports = function (app) {
       image: req.body.image,
       yelp: req.body.yelp,
       status: req.body.status,
-      CityId: req.body.cityId
+      CityId: req.body.CityId
     }, {
       where: {
         UserId: req.user.id
