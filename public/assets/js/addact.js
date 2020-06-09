@@ -3,6 +3,7 @@
 $(document).ready(function () {
     //check that the city id has been saved correctly
     const currentCity = sessionStorage.getItem("currentCityId");
+    console.log(currentCity);
 
     //Functions////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     //Search Yelp
@@ -133,7 +134,7 @@ $(document).ready(function () {
         console.log(cityInfo);
         let nextAct = await getNextActivity(cityId);
         if (!nextAct) window.location.replace("/searchcity");
-        let searchResults = await searchYelp(nextAct.queryTxt, cityInfo.data[0].lat, cityInfo.data[0].lon);
+        let searchResults = await searchYelp(nextAct.queryTxt, cityInfo.data.lat, cityInfo.data.lon);
         await displayRes(nextAct.uiTxt, searchResults);
 
         $(".addBtn").on("click", async function (event) {
