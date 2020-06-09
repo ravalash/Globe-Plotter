@@ -3,7 +3,7 @@ $(document).ready(function () {
     const geocoder = new google.maps.Geocoder;
 
     //get the current trip id
-    const tripId = sessionStorage.getItem("currentTripId");
+    const tripId = Number(sessionStorage.getItem("currentTripId"));
     //check that this is obtained correctly
     console.log(tripId);
 
@@ -74,7 +74,7 @@ $(document).ready(function () {
             console.log(cityData);
             //use object destructuring to create variables to feed to the addCity function
             const [{ placeName }, { lat }, { lon }] = Array(3).fill(cityData);
-            console.log(placeName);
+            console.log(placeName, lat, lon, tripId);
             let newCity = await addCity(placeName, lat, lon, "testimagestring.com", 0, tripId);
             //save the new city's id in session storage and move on to adding activities
             sessionStorage.setItem("currentCityId", newCity.data.id);
