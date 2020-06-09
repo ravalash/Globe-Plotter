@@ -2,7 +2,7 @@ module.exports = function (sequelize, DataTypes) {
   const Activity = sequelize.define("Activity", {
     activity_name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
       // validate: {
       //   len: [3, 40],
       //   is: /^[a-zA-Z0-9._ ]+$/i,
@@ -31,21 +31,26 @@ module.exports = function (sequelize, DataTypes) {
       },
     },
     status: {
-      type: DataTypes.BOOLEAN,
+      type: DataTypes.INTEGER,
       allowNull: false,
+      validate: {
+        min: 0,
+        max: 1,
+        isNumeric: true,
+      },
     },
   });
 
   Activity.associate = function (models) {
     Activity.belongsTo(models.City, {
       foreignKey: {
-        allowNull: false
-      }
+        allowNull: false,
+      },
     });
     Activity.belongsTo(models.User, {
       foreignKey: {
-        allowNull: false
-      }
+        allowNull: false,
+      },
     });
   };
 
