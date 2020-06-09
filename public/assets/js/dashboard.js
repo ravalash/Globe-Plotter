@@ -36,6 +36,7 @@ var trips = [
     }
 ]
 
+
 for (var i = 0; i < trips.length; i += 1) {
     var currentTrip = trips[i];
     var citiesList = citiesListGenerator(currentTrip.cities)
