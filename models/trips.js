@@ -22,6 +22,15 @@ module.exports = function (sequelize, DataTypes) {
         isDate: true,
       },
     },
+    status: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        min: 0,
+        max: 2,
+        isNumeric: true,
+      },
+    }
   });
 
   Trip.associate = function (models) {

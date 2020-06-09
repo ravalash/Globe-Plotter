@@ -8,7 +8,7 @@ module.exports = function (app) {
   });
 
   //get trips by user id
-  app.get("/api/trips/:UserId", function (req, res) {
+  app.get("/api/trips", function (req, res) {
     if (!req.user) {
       res.json({});
     } else {
@@ -120,11 +120,13 @@ module.exports = function (app) {
 
   //post route for creating a new trip
   app.post("/api/trips", function (req, res) {
+    console.log(req.body.status)
     db.Trip.create({
       trip_name: req.body.trip_name,
       start_date: req.body.start_date,
       end_date: req.body.end_date,
-      UserId: req.user.id
+      UserId: req.user.id,
+      status: req.body.status
     })
       .then(function (result) {
         res.json(result);
@@ -159,8 +161,8 @@ module.exports = function (app) {
       UserId: req.user.id
     })
       .then(function (result) {
+        // res.json(result);
         res.redirect("/dashboard");
-        res.json(result);
       });
   });
 

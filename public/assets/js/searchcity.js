@@ -1,5 +1,6 @@
 $(document).ready(function () {
     //set up the geocoder
+    const cityImage="testimagestring.com"
     const geocoder = new google.maps.Geocoder;
 
     //get the current trip id
