@@ -1,6 +1,6 @@
 $(document).ready(function () {
     //set up the geocoder
-    const cityImage="testimagestring.com"
+    const cityImage = "testimagestring.com"
     const geocoder = new google.maps.Geocoder;
 
     //get the current trip id
@@ -38,14 +38,15 @@ $(document).ready(function () {
         });
     }
 
-    // //Get a city's image 
-    // function getCityImage(placeName) {
-    //     let query = wikiQuery()
-    //     let URL = "https://en.wikipedia.org/w/api.php?action=query&titles=" + query + "&prop=images"
-    //     $.get(URL, function (data, status) {
-    //         console.log(data)
-    //     }, 'html');
-    // }
+    //Get a city's image 
+    function getCityImage(placeName) {
+        let query = placeName + "&key=AIzaSyDfSBIwm7UFIwP9C4nZq2gi_IhL4z0dkS4"
+        let URL = "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/textsearch/json?query=" + query
+        console.log(URL)
+        $.get(URL, function (data, status) {
+            console.log(data.results[0])
+        }, 'html');
+    }
 
     //Post a new city
     async function addCity(city_name, lat, lon, image, status, tripId) {
@@ -85,7 +86,7 @@ $(document).ready(function () {
             //use object destructuring to create variables to feed to the addCity function
             const [{ placeName }, { lat }, { lon }] = Array(3).fill(cityData);
             console.log(placeName);
-            // let cityImage = await getCityImage(placeName)
+            let cityImage = await getCityImage(placeName)
             let newCity = await addCity(placeName, lat, lon, cityImage, 0, tripId);
 
             //save the new city's id in session storage and move on to adding activities
