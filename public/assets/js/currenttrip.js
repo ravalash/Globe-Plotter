@@ -108,6 +108,7 @@ $(document).ready(function () {
         $("#tripName").text(tripInfo.data.trip_name);
         //empty the cities section
         $("#citiesSection").empty();
+        let allCitiesDone = true;
         cities.forEach(async (city, index) => {
             //get the activities for this city
             const newDiv = $('<div class="container" id="trip-card"></div>');
@@ -117,23 +118,30 @@ $(document).ready(function () {
             //declare a variable to hold the city name
             let newHeading;
             //if the city is not complete, display the header without strikethrough
-            if (city.status == 0) newHeading = $(`<h3>${city.city_name}</h3><button class="delBtn" data-type="city" data-id="${city.id}">Cancel this city</button>`);
+            if (city.status == 0) {
+                newHeading = `<h3>${city.city_name}</h3><button class="button-card" data-function="delBtn" data-type="city" data-id="${city.id}">Cancel this city</button>`;
+                allCitiesDone = false;
+            }
             //if the city is complete, display it with strikethrough
-            else newHeading = $(`<h3><s>${city.city_name}</s></h3><button class="delBtn" data-type="city" data-id="${city.id}">Cancel this city</button>`);
+            else newHeading = `<h3><s>${city.city_name}</s></h3><button class="button-card" data-function="delBtn" data-type="city" data-id="${city.id}">Cancel this city</button>`;
             // 
             let newActHtml = '';
+            let allDone = true;
             activities.forEach(activity => {
                 if (activity.status == 0) {
-                    newActHtml += `<p>${activity.activity_name}</p><button class="checkBtn" data-type="activity" data-id="${activity.id}">Done!</button><button class="delBtn" data-type="activity" data-id="${activity.id}">Cancel this Activity</button>`
+                    allDone = false;
+                    newActHtml += `<p>${activity.activity_name}</p><button class="button-card" data-function="checkBtn" data-type="activity" data-id="${activity.id}">Done!</button><button class="button-card" data-function="delBtn" data-type="activity" data-id="${activity.id}">Cancel this Activity</button>`
                 } else {
-                    newActHtml += `<p><s>${activity.activity_name}</s></p><button class="delBtn" data-type="activity" data-id="${activity.id}">Cancel this Activity</button>`
+                    newActHtml += `<p><s>${activity.activity_name}</s></p><button class="button-card" data-function="delBtn" data-type="activity" data-id="${activity.id}">Cancel this Activity</button>`
                 }
             });
-            console.log(newActHtml);
+            if (allDone && city.status == 0) newHeading += `<button class="button-card" data-function="checkBtn" data-type="city" data-id="${city.id}">All done in ${city.city_name}!</button>`;
+            newHeading = $(newHeading);
             newActHtml = $(newActHtml);
             $("#citiesSection").append(newDiv);
             newDiv.append(newHeading);
             newDiv.append(newActHtml);
+            if (allCitiesDone) newDiv.append($(`<button class=button-card data-function="tripComplete">This journey is complete!</button>`));
         });
     }
 
@@ -145,15 +153,18 @@ $(document).ready(function () {
     $("#citiesSection").on("click", async function (event) {
         event.preventDefault();
         const button = $(event.target);
-        console.log(button);
-        console.log(button.attr("class"));
-        if (button.attr("class") === "checkBtn") {
-            console.log('hey');
-            id = button.attr("data-id");
-            await updateActStatus(id, 1);
-            renderPage(trip);
+        if (button.attr("data-function") === "checkBtn") {
+            if (button.attr("data-type") === "activity") {
+                id = button.attr("data-id");
+                await updateActStatus(id, 1);
+                renderPage(trip);
+            } else if (button.attr("data-type") === "city") {
+                id = button.attr("data-id");
+                await updateCityStatus(id, 1);
+                renderPage(trip);
+            };
         }
-        else if (button.attr("class") === "delBtn") {
+        else if (button.attr("data-function") === "delBtn") {
             if (button.attr("data-type") === "city") {
                 console.log("delete city");
                 id = button.attr("data-id");
@@ -165,6 +176,10 @@ $(document).ready(function () {
                 await cancelActivity(id);
                 renderPage(trip);
             }
+        }
+        else if (button.attr("data-function") === "tripComplete") {
+            await updateTripStatus(trip, 2);
+            window.location.replace("/dashboard");
         }
     });
 });
