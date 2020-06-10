@@ -113,7 +113,7 @@ $(document).ready(function () {
         let allCitiesDone = true;
         cities.forEach(async (city, index) => {
             //get the activities for this city
-            const newDiv = $('<div class="container" id="trip-card"></div>');
+            const newDiv = $('<div class="container" id="sign-card"></div>');
             let activities = await getActivities(city.id);
             activities = activities.data;
             console.log(activities);

@@ -84,7 +84,8 @@ a.navbar-item {
 }
 
 #login-card {
-    padding: 3%;
+    padding: 20px;
+    border-radius: 15px;
     background-color: #0000FF;
     border: 5px white solid;
     color: white;
@@ -92,7 +93,8 @@ a.navbar-item {
 }
 
 #choice-card {
-    padding: 3%;
+    padding: 20px;
+    border-radius: 15px;
     width: 60%;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -103,7 +105,8 @@ a.navbar-item {
 }
 
 #search-card {
-    padding: 3%;
+    padding: 20px;
+    border-radius: 15px;
     background-color: #009900;
     border: 5px white solid;
     border-radius: 5%;
@@ -126,17 +129,33 @@ a.navbar-item {
 
 #trip-card {
     margin: 10px;
-    padding: 3%;
+    padding: 20px;
+    border-radius: 15px;
     background-color: #009900;
     border: 5px white solid;
-    border-radius: 5%;
+    color: white;
+    text-align: center;
+}
+
+#trip-card:hover {
+    background-color: darkgreen;
+    box-shadow: 2px 3px darkslategray;
+}
+
+#sign-card {
+    margin: 10px;
+    padding: 20px;
+    border-radius: 15px;
+    background-color: #009900;
+    border: 5px white solid;
     color: white;
     text-align: center;
 }
 
 .addBtn {
     margin: 10px;
-    padding: 3%;
+    padding: 20px;
+    border-radius: 15px;
     background-color: #FF6600;
     border: 2px black solid;
     color: black;
@@ -145,7 +164,8 @@ a.navbar-item {
 
 .button-card {
     margin: 10px;
-    padding: 3%;
+    padding: 20px;
+    border-radius: 15px;
     background-color: #FF6600;
     border: 2px black solid;
     color: black;
