@@ -91,6 +91,17 @@ a.navbar-item {
     text-align: center;
 }
 
+#choice-card {
+    padding: 3%;
+    width: 60%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: #0000FF;
+    border: 5px white solid;
+    color: white;
+    text-align: center;
+}
+
 #search-card {
     padding: 3%;
     background-color: #009900;
@@ -167,13 +178,6 @@ a.navbar-item {
     border-right: 1px gray solid
 }
 
-.choice-card {
-    padding: 8px;
-    width: 100%;
-    border-radius: 25%;
-    box-shadow: 2px 2px grey;
-    color: black
-}
 
 path {
     fill: #fffeb3
