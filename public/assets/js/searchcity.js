@@ -38,14 +38,41 @@ $(document).ready(function () {
         });
     }
 
-    //Get a city's image 
+    // Get a city's image 
+    // //Gets photo reference
     // function getCityImage(placeName) {
-    //     let query = placeName + "&key=AIzaSyDfSBIwm7UFIwP9C4nZq2gi_IhL4z0dkS4"
-    //     let URL = "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/textsearch/json?query=" + query
-    //     console.log(URL)
-    //     $.get(URL, function (data, status) {
-    //         console.log(data.results[0])
-    //     }, 'html');
+    //     return new Promise(async function (resolve, reject) {
+    //         try {
+    //             let query = placeName + "&key=AIzaSyDfSBIwm7UFIwP9C4nZq2gi_IhL4z0dkS4"
+    //             let URL = "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/textsearch/json?query=" + query
+    //             console.log(URL)
+    //             $.get(URL, function (data, status) {
+    //                 var data = JSON.parse(data)
+    //                 var reference = data.results[0].photos[0].photo_reference
+    //                 var image = getPic(reference)
+    //                 resolve(image)
+    //             }, 'html');
+
+    //         } catch (error) {
+    //             reject(error)
+    //         }
+    //     })
+    // }
+    // //Gets photo url
+    // async function getPic(reference) {
+    //     return new Promise(async function (resolve, reject) {
+    //         try {
+    //             let query = reference + "&key=AIzaSyDfSBIwm7UFIwP9C4nZq2gi_IhL4z0dkS4"
+    //             let URL = "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/photo?maxwidth=300&photo_reference=" + query
+    //             console.log(URL)
+    //             $.get(URL, function (data, status) {
+    //                 var image = data
+    //                 resolve(image)
+    //             }, 'html');
+    //         } catch (error) {
+    //             reject(error)
+    //         }
+    //     })
     // }
 
     //Post a new city
@@ -87,8 +114,9 @@ $(document).ready(function () {
             const [{ placeName }, { lat }, { lon }] = Array(3).fill(cityData);
             console.log(placeName);
             // let cityImage = await getCityImage(placeName)
-            let newCity = await addCity(placeName, lat, lon, "testimage.com", 0, tripId);
-
+            let cityImage = "testurl.com"
+            let newCity = await addCity(placeName, lat, lon, cityImage, 0, tripId);
+            console.log(cityImage)
             //save the new city's id in session storage and move on to adding activities
             sessionStorage.setItem("currentCityId", newCity.data.id);
             window.location.replace("/addact");

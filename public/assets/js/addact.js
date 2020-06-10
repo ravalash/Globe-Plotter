@@ -35,7 +35,11 @@ $(document).ready(function () {
         //display the prompt text for this category
         $("#promptText").text(categoryText);
         for (let i = 0; i < searchResults.length; i++) {
-            $(`#act${i}`).text(searchResults[i].name);
+            $('#actionList').append(
+                '<div class="container" id="choice-card" data-index=' + i + '> <p><b>' +
+                searchResults[i].name +
+                '</b> </p><button class="addBtn">Add</button> </div> <br>'
+            );
         }
     }
 
@@ -59,27 +63,27 @@ $(document).ready(function () {
             let categories = [{
                 name: "food",
                 queryTxt: "food, All",
-                uiTxt: "Please add a place to eat:" //will make this text more 'personable' once I get the code working
+                uiTxt: "Where would you like to eat?" //will make this text more 'personable' once I get the code working
             },
             {
                 name: "museums",
                 queryTxt: "museums, All",
-                uiTxt: "Please add a museum."
+                uiTxt: "What museum do you want to check out?"
             },
             {
                 name: "tours",
                 queryTxt: "tours, All",
-                uiTxt: "Please add a tour."
+                uiTxt: "Which tour sounds good?"
             },
             {
                 name: "bars",
                 queryTxt: "bars, All",
-                uiTxt: "Please add a bar."
+                uiTxt: "Where would you want to grab a drink?"
             },
             {
                 name: "landmarks",
                 queryTxt: "landmarks, All",
-                uiTxt: "Please add a landmark."
+                uiTxt: "Which landmark would you like to visit?"
             }]
             try {
                 let activities = await axios.get(`/api/activities/${cityId}`);
