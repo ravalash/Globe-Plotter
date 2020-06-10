@@ -1,6 +1,6 @@
 $(document).ready(function () {
     //set up the geocoder
-    const cityImage="testimagestring.com"
+    const cityImage = "testimagestring.com"
     const geocoder = new google.maps.Geocoder;
 
     //get the current trip id
@@ -42,8 +42,9 @@ $(document).ready(function () {
     function getCityImage(placeName) {
         let query = placeName + "&key=AIzaSyDfSBIwm7UFIwP9C4nZq2gi_IhL4z0dkS4"
         let URL = "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/textsearch/json?query=" + query
+        console.log(URL)
         $.get(URL, function (data, status) {
-            console.log(data)
+            console.log(data.results[0])
         }, 'html');
     }
 
