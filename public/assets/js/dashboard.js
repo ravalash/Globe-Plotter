@@ -102,6 +102,14 @@ $.get("/api/trips")
           sessionStorage.setItem("currentTripId", $(this).attr("data-tripid"));
           window.location.href = "/currenttrip";
         });
+
+      $(completedList)
+        .children("#trip-card")
+        .click(function () {
+          event.preventDefault();
+          sessionStorage.setItem("currentTripId", $(this).attr("data-tripid"));
+          window.location.href = "/comptrip";
+        });
     });
   })
   .catch(console.error());
