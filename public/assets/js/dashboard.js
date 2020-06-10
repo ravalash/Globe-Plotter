@@ -78,9 +78,9 @@ $.get("/api/trips")
           event.preventDefault();
           console.log("you clicked me!");
           const selectedId = $(this).attr("data-tripid");
-          const trip_name = $(this).eq(0).find("h1").text();
-          const start_date = $(this).eq(0).find("p").text().substring(5, 15);
-          const end_date = $(this).eq(0).find("p").text().substring(19, 29);
+          const trip_name = $(this).children("h1").text();
+          const start_date = $(this).children("p").eq(1).text().substring(5, 15);
+          const end_date = $(this).children("p").eq(1).text().substring(19, 29);
           $.ajax({
             method: "PUT",
             url: `/api/trips/${selectedId}`,
