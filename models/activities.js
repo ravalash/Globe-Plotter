@@ -3,18 +3,10 @@ module.exports = function (sequelize, DataTypes) {
     activity_name: {
       type: DataTypes.STRING,
       allowNull: false,
-      // validate: {
-      //   len: [3, 40],
-      //   is: /^[a-zA-Z0-9._ ]+$/i,
-      // },
     },
     activity_type: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        len: [3, 40],
-        is: /^[a-zA-Z0-9._ ]+$/i,
-      },
     },
     image: {
       type: DataTypes.STRING,
@@ -39,6 +31,19 @@ module.exports = function (sequelize, DataTypes) {
         isNumeric: true,
       },
     },
+    description: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    address: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    phone: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+
   });
 
   Activity.associate = function (models) {

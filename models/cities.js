@@ -3,24 +3,14 @@ module.exports = function (sequelize, DataTypes) {
     city_name: {
       type: DataTypes.STRING,
       allowNull: false
-      // validate: {
-      //   // len: [3, 40],
-      //   // is: /^[a-zA-Z0-9._ ]+$/i,
-      // },
     },
     lat: {
       type: DataTypes.DECIMAL,
       allowNull: false,
-      validate: {
-        isNumeric: true,
-      },
     },
     lon: {
       type: DataTypes.DECIMAL,
       allowNull: false,
-      validate: {
-        isNumeric: true,
-      },
     },
     image: {
       type: DataTypes.STRING,
