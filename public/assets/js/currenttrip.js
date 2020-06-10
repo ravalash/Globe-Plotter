@@ -105,6 +105,7 @@ $(document).ready(function () {
     async function renderPage(tripId) {
         let tripInfo = await getTripInfo(tripId);
         let cities = await getCities(tripId);
+        console.log(tripInfo);
         //fill in the tripName
         $("#tripName").text(tripInfo.data.trip_name);
         //empty the cities section
