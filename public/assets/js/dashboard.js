@@ -32,7 +32,7 @@ $.get("/api/trips")
         if (currentTrip.status == 0) {
           plannedList.append(
             '<div class="container" id="trip-card" data-TripId =' +
-              currentTrip.id + 
+              currentTrip.id +
               "> <h1><b>" +
               currentTrip.trip_name +
               "</b></h1> <p>" +
@@ -45,7 +45,9 @@ $.get("/api/trips")
           );
         } else if (currentTrip.status == 1) {
           inProgressList.append(
-            '<div class="container" id="trip-card"> <h1><b>' +
+            '<div class="container" id="trip-card" data-TripId = ' +
+              currentTrip.id +
+              "> <h1><b>" +
               currentTrip.trip_name +
               "</b></h1> <p>" +
               citiesList +
@@ -72,34 +74,33 @@ $.get("/api/trips")
 
       $(plannedList)
         .children("#trip-card")
-        .click(function (event) {
+        .click(function () {
           event.preventDefault();
           console.log("you clicked me!");
-          const selectedId=$(this).attr('data-tripid');
-          const trip_name = $(this).eq(0).find('h1').text();
-          const start_date=$(this).eq(0).find('p').text().substring(5,15);
-          const end_date=$(this).eq(0).find('p').text().substring(19,29);
+          const selectedId = $(this).attr("data-tripid");
+          const trip_name = $(this).eq(0).find("h1").text();
+          const start_date = $(this).eq(0).find("p").text().substring(5, 15);
+          const end_date = $(this).eq(0).find("p").text().substring(19, 29);
           $.ajax({
             method: "PUT",
             url: `/api/trips/${selectedId}`,
-            data: {trip_name: trip_name, start_date: start_date, end_date: end_date, status: 1}
-          })
-            .then(function() {
-              window.location.href = "/dashboard";
-            });
+            data: {
+              trip_name: trip_name,
+              start_date: start_date,
+              end_date: end_date,
+              status: 1,
+            },
+          }).then(function () {
+            window.location.href = "/dashboard";
+          });
+        });
 
-          // $.put(`/api/trips/${selectedId}`)
-
-          // app.put("/api/trips/:id", function (req, res) {
-          //   db.Trip.update({
-          //     trip_name: req.body.trip_name,
-          //     start_date: req.body.start_date,
-          //     end_date: req.body.end_date
-          
-          
-
-          // sessionStorage.setItem("currentTripId", newTrip.data.id);
-          // for testing purposes go to seach city
+      $(inProgressList)
+        .children("#trip-card")
+        .click(function () {
+          event.preventDefault();
+          sessionStorage.setItem("currentTripId", $(this).attr("data-tripid"));
+          window.location.href = "/currenttrip";
         });
     });
   })
