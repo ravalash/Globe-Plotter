@@ -6,7 +6,8 @@ $(document).ready(async function () {
                 const response = await axios.post("/api/trips", {
                     trip_name: trip_name,
                     start_date: start_date,
-                    end_date: end_date
+                    end_date: end_date,
+                    status: 0
                 });
                 resolve(response);
             } catch (error) {
@@ -15,6 +16,16 @@ $(document).ready(async function () {
         });
     }
     //create a new trip and save the id in session storage
-    let newTrip = await addTrip("Joes trip", "8/1/2020", "8/31/2020");
-    sessionStorage.setItem("currentTripId", newTrip.data.id);
+    $("#newTripForm").on("submit", async function (event) {
+        event.preventDefault();
+        const tripName = $("#tripName").val().trim();
+        const startDate = $("#startDate").val().trim();
+        const endDate = $("#endDate").val().trim();
+        if (tripName && startDate && endDate) {
+            let newTrip = await addTrip(tripName, startDate, endDate);
+            sessionStorage.setItem("currentTripId", newTrip.data.id);
+            $("#addCity").removeAttr("hidden");
+            $("button").attr("hidden", "true");
+        }
+    });
 });

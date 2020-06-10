@@ -123,6 +123,15 @@ a.navbar-item {
     text-align: center;
 }
 
+.addBtn {
+    margin: 10px;
+    padding: 3%;
+    background-color: #FF6600;
+    border: 2px black solid;
+    color: black;
+    text-align: center;
+}
+
 .button-card {
     margin: 10px;
     padding: 3%;
