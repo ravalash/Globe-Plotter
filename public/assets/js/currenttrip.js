@@ -1,6 +1,7 @@
 $(document).ready(function () {
     //get the current trip from session storage
     const trip = sessionStorage.getItem("currentTripId");
+    console.log(trip);
 
     //Read, update and delete functions
     //Read
