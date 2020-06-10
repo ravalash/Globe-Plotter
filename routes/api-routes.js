@@ -22,6 +22,22 @@ module.exports = function (app) {
     }
   });
 
+ //get trips by user id
+ app.get("/api/cities", function (req, res) {
+  if (!req.user) {
+    res.json({});
+  } else {
+    db.City.findAll({
+      where: {
+        UserId: req.user.id
+      }
+    }).then(function (result) {
+      res.json(result);
+    });
+  }
+});
+
+
   //get the info for one trip
   app.get("/api/trips/byid/:id", function (req, res) {
     if (!req.user) {

@@ -6,107 +6,83 @@ const completedList = $("#completed-trips-list");
 let userId = "dan";
 // let trips = getTrips(userId)
 const trips = [];
+const cities = [];
 $.get("/api/trips")
   .then(function (result) {
-    console.log(result);
     result.forEach((element) => {
       trips.push(element);
     });
-    console.log(trips);
-    for (var i = 0; i < trips.length; i += 1) {
-      var currentTrip = trips[i];
-      var citiesList = citiesListGenerator(currentTrip.cities);
-      // Checks if trip is in edit, in progress, or compelte; sorts accordingly
-      if (currentTrip.status == "edit") {
-        plannedList.append(
-          '<div class="container" id="trip-card"> <h1><b>' +
-            currentTrip.trip_name +
-            "</b></h1> <p>" +
-            citiesList +
-            "</p> <p>From " +
-            currentTrip.start_date +
-            " to " +
-            currentTrip.end_date +
-            "</p></div>"
-        );
-      } else if (currentTrip.status == "inProgress") {
-        inProgressList.append(
-          '<div class="container" id="trip-card"> <h1><b>' +
-            currentTrip.trip_name +
-            "</b></h1> <p>" +
-            citiesList +
-            "</p> <p>From " +
-            currentTrip.start_date +
-            " to " +
-            currentTrip.end_date +
-            "</p></div>"
-        );
-      } else if (currentTrip.status == "completed") {
-        completedList.append(
-          '<div class="container" id="trip-card"> <h1><b>' +
-            currentTrip.trip_name +
-            "</b></h1> <p>" +
-            citiesList +
-            "</p> <p>From " +
-            currentTrip.start_date +
-            " to " +
-            currentTrip.end_date +
-            "</p></div>"
-        );
+    $.get("/api/cities").then(function (result) {
+      result.forEach((element) => {
+        cities.push(element);
+      });
+      for (var i = 0; i < trips.length; i += 1) {
+        var currentTrip = trips[i];
+        var citiesList = "";
+        currentTrip.cities = [];
+        cities.forEach((element) => {
+          if (element.TripId === currentTrip.id) {
+            currentTrip.cities.push(element);
+          }
+        });
+        if (currentTrip.cities.length != 0) {
+          var citiesList = citiesListGenerator(currentTrip.cities);
+        }
+        // Checks if trip is in edit, in progress, or compelte; sorts accordingly
+        if (currentTrip.status == 0) {
+          plannedList.append(
+            '<div class="container" id="trip-card"> <h1><b>' +
+              currentTrip.trip_name +
+              "</b></h1> <p>" +
+              citiesList +
+              "</p> <p>From " +
+              currentTrip.start_date +
+              " to " +
+              currentTrip.end_date +
+              "</p></div>"
+          );
+        } else if (currentTrip.status == 1) {
+          inProgressList.append(
+            '<div class="container" id="trip-card"> <h1><b>' +
+              currentTrip.trip_name +
+              "</b></h1> <p>" +
+              citiesList +
+              "</p> <p>From " +
+              currentTrip.start_date +
+              " to " +
+              currentTrip.end_date +
+              "</p></div>"
+          );
+        } else if (currentTrip.status == 2) {
+          completedList.append(
+            '<div class="container" id="trip-card"> <h1><b>' +
+              currentTrip.trip_name +
+              "</b></h1> <p>" +
+              citiesList +
+              "</p> <p>From " +
+              currentTrip.start_date +
+              " to " +
+              currentTrip.end_date +
+              "</p></div>"
+          );
+        }
       }
-    }
+    });
   })
   .catch(console.error());
 
-// var trips = [
-//   {
-//     trip_name: "Western New York",
-//     start_date: "June 23",
-//     end_date: "June 28",
-//     status: "edit",
-//     cities: ["Buffalo", "Rochester", "Syracuse"],
-//   },
-//   {
-//     trip_name: "Florida",
-//     start_date: "July 8",
-//     end_date: "July 12",
-//     status: "edit",
-//     cities: ["Miami", "Tampa", "Naples", "Orlando"],
-//   },
-//   {
-//     trip_name: "Pacific Northwest",
-//     start_date: "June 2",
-//     end_date: "June 9",
-//     status: "inProgress",
-//     cities: [
-//       "Seattle",
-//       "Portland",
-//       "Aberdeen",
-//       "Eugene",
-//       "Tacoma",
-//       "Vancouver",
-//     ],
-//   },
-//   {
-//     trip_name: "France",
-//     start_date: "May 20",
-//     end_date: "May 24",
-//     status: "completed",
-//     cities: ["Nice", "Paris"],
-//   },
-// ];
 
-function citiesListGenerator(currentTrip) {
-  var cities = currentTrip.cities;
+
+function citiesListGenerator(cities) {
   var remaining = cities.length - 2;
   if (cities.length == 1) {
-    return cities[0];
+    return cities[0].city_name;
   } else if (cities.length == 2) {
-    return cities[0] + " and " + cities[1];
+    return cities[0].city_name + " and " + cities[1].city_name;
   } else if (cities.length == 3) {
-    return cities[0] + ", " + cities[1] + " and 1 more";
+    return cities[0].city_name + ", " + cities[1].city_name + " and 1 more";
   } else {
-    return cities[0] + ", " + cities[1] + " and " + remaining + " more";
+    return cities[0].city_name + ", " + cities[1].city_name + " and " + remaining + " more";
   }
 }
 
@@ -117,7 +93,7 @@ async function addTrip(trip_name, start_date, end_date, status) {
         trip_name: trip_name,
         start_date: start_date,
         end_date: end_date,
-        status: status
+        status: status,
       });
       resolve(response);
     } catch (error) {
