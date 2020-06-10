@@ -54,7 +54,7 @@ $(document).ready(function () {
         return new Promise(async (resolve, reject) => {
             try {
                 let cancelledAct = await axios.delete(`/api/activities/${id}`);
-                resolve(cancelAct);
+                resolve(cancelledAct);
             } catch (error) {
                 reject(error);
             }
@@ -105,36 +105,66 @@ $(document).ready(function () {
         let tripInfo = await getTripInfo(tripId);
         let cities = await getCities(tripId);
         //fill in the tripName
-        $("#tripName").text(tripInfo.trip_name);
+        $("#tripName").text(tripInfo.data.trip_name);
         //empty the cities section
         $("#citiesSection").empty();
         cities.forEach(async (city, index) => {
             //get the activities for this city
+            const newDiv = $('<div class="container" id="trip-card"></div>');
             let activities = await getActivities(city.id);
             activities = activities.data;
             console.log(activities);
             //declare a variable to hold the city name
             let newHeading;
             //if the city is not complete, display the header without strikethrough
-            if (city.status = 0) newHeading = $(`<h3>${city.city_name}</h3><button class="delBtn" data-type="city" data-id="${city.id}">Cancel this city</button>`);
+            if (city.status == 0) newHeading = $(`<h3>${city.city_name}</h3><button class="delBtn" data-type="city" data-id="${city.id}">Cancel this city</button>`);
             //if the city is complete, display it with strikethrough
             else newHeading = $(`<h3><s>${city.city_name}</s></h3><button class="delBtn" data-type="city" data-id="${city.id}">Cancel this city</button>`);
             // 
             let newActHtml = '';
             activities.forEach(activity => {
-                // if (activity.status = 0) {
-                newActHtml += `<p>${activity.activity_name}</p><button class="checkBtn" data-type="activity" data-id="${activity.id}">Complete!</button><button class="delBtn" data-type="activity" data-id="${activity.id}">Cancel this city</button>`
-                // } else {
-                //     newActHtml += `<p>${activity.activity_name}</p><button class="delBtn" data-type="activity" data-id="${activity.id}">Cancel this city</button>`
-                // }
+                if (activity.status == 0) {
+                    newActHtml += `<p>${activity.activity_name}</p><button class="checkBtn" data-type="activity" data-id="${activity.id}">Done!</button><button class="delBtn" data-type="activity" data-id="${activity.id}">Cancel this Activity</button>`
+                } else {
+                    newActHtml += `<p><s>${activity.activity_name}</s></p><button class="delBtn" data-type="activity" data-id="${activity.id}">Cancel this Activity</button>`
+                }
             });
             console.log(newActHtml);
             newActHtml = $(newActHtml);
-            $("#citiesSection").append(newHeading);
-            $("#citiesSection").append(newActHtml);
+            $("#citiesSection").append(newDiv);
+            newDiv.append(newHeading);
+            newDiv.append(newActHtml);
         });
     }
 
     //render the page!
     renderPage(trip);
+
+
+    //On click functions
+    $("#citiesSection").on("click", async function (event) {
+        event.preventDefault();
+        const button = $(event.target);
+        console.log(button);
+        console.log(button.attr("class"));
+        if (button.attr("class") === "checkBtn") {
+            console.log('hey');
+            id = button.attr("data-id");
+            await updateActStatus(id, 1);
+            renderPage(trip);
+        }
+        else if (button.attr("class") === "delBtn") {
+            if (button.attr("data-type") === "city") {
+                console.log("delete city");
+                id = button.attr("data-id");
+                await cancelCity(id)
+                renderPage(trip);
+            } else if (button.attr("data-type") === "activity") {
+                console.log("delete activity");
+                id = button.attr("data-id");
+                await cancelActivity(id);
+                renderPage(trip);
+            }
+        }
+    });
 });
