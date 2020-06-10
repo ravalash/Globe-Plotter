@@ -31,7 +31,9 @@ $.get("/api/trips")
         // Checks if trip is in edit, in progress, or compelte; sorts accordingly
         if (currentTrip.status == 0) {
           plannedList.append(
-            '<div class="container" id="trip-card"> <h1><b>' +
+            '<div class="container" id="trip-card" data-TripId =' +
+              currentTrip.id + 
+              "> <h1><b>" +
               currentTrip.trip_name +
               "</b></h1> <p>" +
               citiesList +
@@ -67,11 +69,41 @@ $.get("/api/trips")
           );
         }
       }
+
+      $(plannedList)
+        .children("#trip-card")
+        .click(function (event) {
+          event.preventDefault();
+          console.log("you clicked me!");
+          const selectedId=$(this).attr('data-tripid');
+          const trip_name = $(this).eq(0).find('h1').text();
+          const start_date=$(this).eq(0).find('p').text().substring(5,15);
+          const end_date=$(this).eq(0).find('p').text().substring(19,29);
+          $.ajax({
+            method: "PUT",
+            url: `/api/trips/${selectedId}`,
+            data: {trip_name: trip_name, start_date: start_date, end_date: end_date, status: 1}
+          })
+            .then(function() {
+              window.location.href = "/dashboard";
+            });
+
+          // $.put(`/api/trips/${selectedId}`)
+
+          // app.put("/api/trips/:id", function (req, res) {
+          //   db.Trip.update({
+          //     trip_name: req.body.trip_name,
+          //     start_date: req.body.start_date,
+          //     end_date: req.body.end_date
+          
+          
+
+          // sessionStorage.setItem("currentTripId", newTrip.data.id);
+          // for testing purposes go to seach city
+        });
     });
   })
   .catch(console.error());
-
-
 
 function citiesListGenerator(cities) {
   var remaining = cities.length - 2;
@@ -82,7 +114,14 @@ function citiesListGenerator(cities) {
   } else if (cities.length == 3) {
     return cities[0].city_name + ", " + cities[1].city_name + " and 1 more";
   } else {
-    return cities[0].city_name + ", " + cities[1].city_name + " and " + remaining + " more";
+    return (
+      cities[0].city_name +
+      ", " +
+      cities[1].city_name +
+      " and " +
+      remaining +
+      " more"
+    );
   }
 }
 
@@ -112,3 +151,5 @@ $("#newTrip").on("click", async function (event) {
   // for testing purposes go to seach city
   window.location.replace("/searchcity");
 });
+
+//Add event listener for clicking on a trip
