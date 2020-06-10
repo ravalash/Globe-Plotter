@@ -1,12 +1,23 @@
 <!--Once this integrates with the database, all cities will display in the ul and the trip name will display at the top-->
 <section class="section">
     <div class="container middle">
-        <h1>Trip Name</h1>
-        <h3>Cities</h3>
-        <ul>
-            <a href="/searchcity">Add a city!</a>
-        </ul>
-        <a href="/dashboard">Go back</a>
+        <div class="container" id="trip-card">
+            <form id="newTripForm">
+                <label for="tripName">Trip name:</label>
+                <input id="tripName" type="text" placeholder="Your Trip Name" name="tripName" required />
+                <br>
+                <label for="startDate">Departure date:</label>
+                <input id="startDate" type="date" placeholde="8/16/2020" name="startDate" required />
+                <br>
+                <label for="endDate">Return date:</label>
+                <input id="endDate" type="date" placeholder="8/31/2020" name="endDate" required />
+                <br>
+                <button type="submit" class="button-card">Create trip!</button>
+                <hr>
+                <a href="/searchcity" style="color:white" id="addCity" hidden="true">Add a city!</a>
+                <a href="/dashboard" style="color:white">Go back</a>
+            </form>
+        </div>
     </div>
 </section>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"
