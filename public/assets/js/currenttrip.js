@@ -144,7 +144,7 @@ $(document).ready(function () {
                         <br>
                         <p>Address: ${activity.address}</p>
                         <p>Phone: ${activity.phone}</p>
-                        <a href="${activity.yelp}" style="color:yellow;">View On Yelp</a>
+                        <a href="${activity.yelp}" style="color:yellow;" target="_blank">View On Yelp</a>
                     </div>
                 </div>
                 <button data-function="checkBtn" data-type="activity" class="button-card" data-id="${activity.id}">Done!</button>
