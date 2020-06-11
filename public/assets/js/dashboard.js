@@ -37,42 +37,42 @@ $.get("/api/trips")
         if (currentTrip.status == 0) {
           plannedList.append(
             '<div class="container" id="trip-card" data-TripId =' +
-              currentTrip.id +
-              "data-start-date =" +
-              currentTrip.start_date +
-              "data-end-date = " +
-              currentTrip.end_date +
-              "data-trip-name = " +
-              currentTrip.trip_name +
-              "> <h1><b>" +
-              currentTrip.trip_name +
-              "</b></h1> <p>" +
-              citiesList +
-              "</p> <p>" +
-              dates +
-              "</p></div>"
+            currentTrip.id +
+            "data-start-date =" +
+            currentTrip.start_date +
+            "data-end-date = " +
+            currentTrip.end_date +
+            "data-trip-name = " +
+            currentTrip.trip_name +
+            "> <h1><b>" +
+            currentTrip.trip_name +
+            "</b></h1> <p>" +
+            citiesList +
+            "</p> <p>" +
+            dates +
+            "</p></div>"
           );
         } else if (currentTrip.status == 1) {
           inProgressList.append(
             '<div class="container" id="trip-card" data-TripId = ' +
-              currentTrip.id +
-              "> <h1><b>" +
-              currentTrip.trip_name +
-              "</b></h1> <p>" +
-              citiesList +
-              "</p> <p>" +
-              dates +
-              "</p></div>"
+            currentTrip.id +
+            "> <h1><b>" +
+            currentTrip.trip_name +
+            "</b></h1> <p>" +
+            citiesList +
+            "</p> <p>" +
+            dates +
+            "</p></div>"
           );
         } else if (currentTrip.status == 2) {
           completedList.append(
             '<div class="container" id="trip-card"> <h1><b>' +
-              currentTrip.trip_name +
-              "</b></h1> <p>" +
-              citiesList +
-              "</p> <p>" +
-              dates +
-              "</p></div>"
+            currentTrip.trip_name +
+            "</b></h1> <p>" +
+            citiesList +
+            "</p> <p>" +
+            dates +
+            "</p></div>"
           );
         }
       }
@@ -138,8 +138,16 @@ function citiesListGenerator(cities) {
   }
 }
 
+// converts YYYY-MM-DD format to Month Day, YYYY
 function datesGenerator(start_date, end_date) {
-  var startDate = moment(start_date).format("MMMM D");
+  let startYear = start_date.split("-", 1)
+  startYear = parseInt(startYear)
+  let endYear = end_date.split("-", 1)
+  endYear = parseInt(endYear)
+  var startDate = ""
+  if (startYear == endYear) {
+    startDate = moment(start_date).format("MMMM D");
+  } else startDate = moment(start_date).format("MMMM D, YYYY");
   var endDate = moment(end_date).format("MMMM D, YYYY");
   return "From " + startDate + " to " + endDate;
 }
@@ -153,6 +161,7 @@ function hideModal() {
   $("#existing-trips-card").addClass("is-hidden");
   $("#completed-trips-card").addClass("is-hidden");
 }
+
 
 async function addTrip(trip_name, start_date, end_date, status) {
   return new Promise(async function (resolve, reject) {
