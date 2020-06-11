@@ -117,14 +117,14 @@ $(document).ready(function () {
             activities = activities.data;
             console.log(activities);
             //declare a variable to hold the city name
-            let newHeading = '<div class="container" id="city-card">';
+            let newHeading = '<div class="container" id="city-title">';
             //if the city is not complete, display the header without strikethrough
             if (city.status == 0) {
-                newHeading += `<h3>${city.city_name}</h3></div>`;
+                newHeading += `<h1><b>${city.city_name}</b></h1></div>`;
                 allCitiesDone = false;
             }
             //if the city is complete, display it with strikethrough
-            else newHeading += `<h3><s>${city.city_name}</s></h3></div>`;
+            else newHeading += `<h1><b><s>${city.city_name}</s></b></h1></div>`;
             // 
             let newActHtml = '';
             let allDone = true;
