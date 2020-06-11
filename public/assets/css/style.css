@@ -222,3 +222,40 @@ path {
 #current-actions {
     margin-left: 10px
 }
+
+.actBtn {
+    align-self: center;
+    width: 350px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#progress-card {
+    align-self: center;
+    margin: 10px;
+    padding: 20px;
+    border-radius: 15px;
+    background-color: #009900;
+    border: 5px white solid;
+    color: white;
+    text-align: center;
+    min-width: 400px;
+}
+
+#progress-card:hover {
+    background-color: darkgreen;
+    box-shadow: 2px 3px darkslategray;
+}
+
+#city-card {
+    align-self: center;
+    margin: 10px;
+    padding: 20px;
+    border-radius: 15px;
+    background-color: #009900;
+    border: 5px white solid;
+    color: white;
+    text-align: center;
+    min-width: 400px;
+}
