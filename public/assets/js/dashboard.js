@@ -81,18 +81,21 @@ $.get("/api/trips")
           const trip_name = $(this).children("h1").text();
           const start_date = $(this).children("p").eq(1).text().substring(5, 15);
           const end_date = $(this).children("p").eq(1).text().substring(19, 29);
-          $.ajax({
-            method: "PUT",
-            url: `/api/trips/${selectedId}`,
-            data: {
-              trip_name: trip_name,
-              start_date: start_date,
-              end_date: end_date,
-              status: 1,
-            },
-          }).then(function () {
-            window.location.href = "/dashboard";
-          });
+
+
+
+          // $.ajax({
+          //   method: "PUT",
+          //   url: `/api/trips/${selectedId}`,
+          //   data: {
+          //     trip_name: trip_name,
+          //     start_date: start_date,
+          //     end_date: end_date,
+          //     status: 1,
+          //   },
+          // }).then(function () {
+          //   window.location.href = "/dashboard";
+          // });
         });
 
       $(inProgressList)
