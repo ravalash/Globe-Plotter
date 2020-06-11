@@ -110,8 +110,10 @@ $.get("/api/trips")
         .children("#trip-card")
         .click(function () {
           event.preventDefault();
-          sessionStorage.setItem("currentTripId", $(this).attr("data-TripId"));
-          window.location.href = "/comptrip";
+          console.log("you clicked me!");
+          clickedTrip = $(this);
+          $("#planned-trips-confirm").addClass("is-active");
+          $("#completed-trips-card").removeClass("is-hidden");
         });
     });
   })
@@ -153,7 +155,6 @@ function datesGenerator(start_date, end_date) {
 }
 
 
-function showModal() { }
 
 function hideModal() {
   console.log("you clicked me!");
@@ -161,6 +162,7 @@ function hideModal() {
   $("#unfinished-trips-card").addClass("is-hidden");
   $("#planned-trips-card").addClass("is-hidden");
   $("#existing-trips-card").addClass("is-hidden");
+  $("#completed-trips-card").addClass("is-hidden");
 }
 
 
@@ -184,10 +186,6 @@ async function addTrip(trip_name, start_date, end_date, status) {
 $("#newTrip").on("click", function (event) {
   event.preventDefault();
   console.log("you clicked me!");
-  // let newTrip = await addTrip("Joes trip", "2020-08-01", "2020-08-31", 0);
-  // console.log(newTrip.data.id);
-  // sessionStorage.setItem("currentTripId", newTrip.data.id);
-  // for testing purposes go to seach city
   window.location.replace("/edittrip");
 });
 
@@ -203,9 +201,6 @@ $("#planned-trips-start").on("click", async function (event) {
   const start_date = clickedTrip.attr("data-start-date");
   const end_date = clickedTrip.attr("data-end-date");
   const trip_name = clickedTrip.attr("data-trip-name");
-  // const trip_name = clickedTrip.children("h1").text();
-  // const start_date = clickedTrip.children("p").eq(1).text().substring(5, 15);
-  // const end_date = clickedTrip.children("p").eq(1).text().substring(19, 29);
   $.ajax({
     method: "PUT",
     url: `/api/trips/${selectedId}`,
@@ -233,6 +228,16 @@ $("#planned-trips-continue").on("click", async function (event) {
   sessionStorage.setItem("currentTripId", clickedTrip.attr("data-tripid"));
   window.location.href = "/currenttrip";
 });
+
+$("#completed-trips-continue").on("click", async function (event) {
+  event.preventDefault();
+  hideModal();
+  sessionStorage.setItem("currentTripId", clickedTrip.attr("data-tripid"));
+  window.location.href = "/comptrip";
+});
+
+
+
 
 /* <button id="planned-trips-edit" class="card-footer-item">Edit Trip</button>
 <button id="planned-trips-delete" class="card-footer-item">Delete Trip</button> */
