@@ -4,6 +4,7 @@ $(document).ready(function () {
 
   const emailField = $("#email-input");
   const passField = $("#password-input");
+  const nameField = $("#name-input");
   const submitBtn = $("#submitBtn");
 
   submitBtn.on("click", function (event) {
@@ -17,10 +18,11 @@ $(document).ready(function () {
     const userInfo = {
       user_email: emailField.val().trim(),
       password: passField.val().trim(),
+      user_name: nameField.val().trim()
     };
-    const userLogin={
-        email: userInfo.user_email,
-        password: userInfo.password
+    const userLogin = {
+      email: userInfo.user_email,
+      password: userInfo.password
     }
 
     //check that the information obtained is correct:
