@@ -66,7 +66,9 @@ $.get("/api/trips")
           );
         } else if (currentTrip.status == 2) {
           completedList.append(
-            '<div class="container" id="trip-card"> <h1><b>' +
+            '<div class="container" id="trip-card" data-TripId = ' +
+            currentTrip.id +
+            '> <h1><b>' +
             currentTrip.trip_name +
             "</b></h1> <p>" +
             citiesList +
@@ -108,7 +110,7 @@ $.get("/api/trips")
         .children("#trip-card")
         .click(function () {
           event.preventDefault();
-          sessionStorage.setItem("currentTripId", $(this).attr("data-tripid"));
+          sessionStorage.setItem("currentTripId", $(this).attr("data-TripId"));
           window.location.href = "/comptrip";
         });
     });
@@ -151,7 +153,7 @@ function datesGenerator(start_date, end_date) {
 }
 
 
-function showModal() {}
+function showModal() { }
 
 function hideModal() {
   console.log("you clicked me!");
