@@ -120,6 +120,7 @@ module.exports = function (app) {
     db.User.create({
       user_email: req.body.user_email,
       password: req.body.password,
+      user_name: req.body.user_name
     })
       .then(function (result) {
         res.json(result);
@@ -251,7 +252,7 @@ module.exports = function (app) {
       {
         where: {
           UserId: req.user.id,
-          id:req.params.id
+          id: req.params.id
         },
       }
     ).then(function (result) {
