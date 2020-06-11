@@ -17,7 +17,7 @@ module.exports = {
     dialect: "mysql",
   },
   production: {
-    JAWSDB_URL: "mysql://nx11bchkqv5hujzs:f5uhgc6dc5hyau1x@ipobfcpvprjpmdo9.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/zpdkmn5jiayztj9b",
-    dialect: "mysql",
+    "use_env_variable": "DATABASE_URL",
+    "dialect": "postgres"
   },
 };
