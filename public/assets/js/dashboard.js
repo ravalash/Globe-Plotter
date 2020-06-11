@@ -4,6 +4,7 @@ const completedList = $("#completed-trips-list");
 
 //db call to be added; once added,
 let userId = "dan";
+let clickedTrip = "";
 // let trips = getTrips(userId)
 const trips = [];
 const cities = [];
@@ -78,19 +79,13 @@ $.get("/api/trips")
           event.preventDefault();
           console.log("you clicked me!");
           const selectedId = $(this).attr("data-tripid");
-          const trip_name = $(this).children("h1").text();
-          const start_date = $(this)
-            .children("p")
-            .eq(1)
-            .text()
-            .substring(5, 15);
-          const end_date = $(this).children("p").eq(1).text().substring(19, 29);
+          clickedTrip = $(this);
           $.get(`/api/activities/bytrip/${selectedId}`).then(function (result) {
             $("#planned-trips-confirm").addClass("is-active");
             if (result.length === 0) {
-              $("#unfinished-trips-card").removeClass("is-hidden")
+              $("#unfinished-trips-card").removeClass("is-hidden");
             } else {
-              $("#planned-trips-card").removeClass("is-hidden")
+              $("#planned-trips-card").removeClass("is-hidden");
             }
           });
         });
@@ -151,22 +146,63 @@ async function addTrip(trip_name, start_date, end_date, status) {
 }
 
 //Add event listener for new trip button
-$("#newTrip").on("click", async function (event) {
+$("#newTrip").on("click",  function (event) {
   event.preventDefault();
   console.log("you clicked me!");
-  let newTrip = await addTrip("Joes trip", "2020-08-01", "2020-08-31", 0);
-  console.log(newTrip.data.id);
-  sessionStorage.setItem("currentTripId", newTrip.data.id);
+  // let newTrip = await addTrip("Joes trip", "2020-08-01", "2020-08-31", 0);
+  // console.log(newTrip.data.id);
+  // sessionStorage.setItem("currentTripId", newTrip.data.id);
   // for testing purposes go to seach city
-  window.location.replace("/searchcity");
+  window.location.replace("/edittrip");
 });
 
-$("#planned-trips-close").on("click", async function (event) {
+$(".planned-trips-close").on("click", async function (event) {
   event.preventDefault();
   console.log("you clicked me!");
   $("#planned-trips-confirm").removeClass("is-active");
   $("#unfinished-trips-card").addClass("is-hidden");
   $("#planned-trips-card").addClass("is-hidden");
 });
+
+$("#planned-trips-start").on("click", async function (event) {
+  event.preventDefault();
+  console.log("you clicked me!");
+  $("#planned-trips-confirm").removeClass("is-active");
+  $("#unfinished-trips-card").addClass("is-hidden");
+  $("#planned-trips-card").addClass("is-hidden");
+  const selectedId = clickedTrip.attr("data-tripid");
+  const trip_name = clickedTrip.children("h1").text();
+  const start_date = clickedTrip.children("p").eq(1).text().substring(5, 15);
+  const end_date = clickedTrip.children("p").eq(1).text().substring(19, 29);
+  $.ajax({
+    method: "PUT",
+    url: `/api/trips/${selectedId}`,
+    data: {
+      trip_name: trip_name,
+      start_date: start_date,
+      end_date: end_date,
+      status: 1,
+    },
+  }).then(function () {
+    window.location.href = "/dashboard";
+  });
+});
+
+$("#planned-trips-edit").on("click", async function (event) {
+  event.preventDefault();
+  console.log("you clicked me!");
+  $("#planned-trips-confirm").removeClass("is-active");
+  $("#unfinished-trips-card").addClass("is-hidden");
+  $("#planned-trips-card").addClass("is-hidden");
+  sessionStorage.setItem("currentTripId", clickedTrip.attr("data-tripid"));
+    window.location.href = "/changetrip";
+});
+
+
+
+
+/* <button id="planned-trips-edit" class="card-footer-item">Edit Trip</button>
+<button id="planned-trips-delete" class="card-footer-item">Delete Trip</button> */
+
 
 //Add event listener for clicking on a trip
