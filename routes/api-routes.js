@@ -84,21 +84,23 @@ module.exports = function (app) {
     }
   });
 
-  app.get("/api/activities/trip/TripId", function (req, res) {
+  app.get("/api/activities/bytrip/:TripId", function (req, res) {
     if (!req.user) {
       res.json({});
     } else {
       db.Activity.findAll({
-        where: {
-          CityId: req.params.CityId,
-          UserId: req.user.id,
-        },include:{Trips, activities}
+        include: [
+          {
+            model: db.City,
+            include: [{ model: db.Trip, where: { id: req.params.TripId } }],required: true
+          },
+        ],
       }).then(function (result) {
         console.log(result);
         res.json(result);
       });
     }
-  });  
+  });
 
   //find one city by id:
   app.get("/api/cities/:CityId", function (req, res) {

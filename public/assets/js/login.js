@@ -32,7 +32,9 @@ $(document).ready(function () {
         .then(function () {
           window.location.replace("/dashboard");
         })
-        .catch(console.error());
+        .catch(function (error) {
+          bulmaToast.toast({ message: "Invalid email and password combination.", type: "is-danger", animate: { in: 'fadeIn', out: 'fadeOut' } });
+        });
     }
   });
 });

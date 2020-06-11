@@ -79,23 +79,20 @@ $.get("/api/trips")
           console.log("you clicked me!");
           const selectedId = $(this).attr("data-tripid");
           const trip_name = $(this).children("h1").text();
-          const start_date = $(this).children("p").eq(1).text().substring(5, 15);
+          const start_date = $(this)
+            .children("p")
+            .eq(1)
+            .text()
+            .substring(5, 15);
           const end_date = $(this).children("p").eq(1).text().substring(19, 29);
-
-
-
-          // $.ajax({
-          //   method: "PUT",
-          //   url: `/api/trips/${selectedId}`,
-          //   data: {
-          //     trip_name: trip_name,
-          //     start_date: start_date,
-          //     end_date: end_date,
-          //     status: 1,
-          //   },
-          // }).then(function () {
-          //   window.location.href = "/dashboard";
-          // });
+          $.get(`/api/activities/bytrip/${selectedId}`).then(function (result) {
+            $("#planned-trips-confirm").addClass("is-active");
+            if (result.length === 0) {
+              $("#unfinished-trips-card").removeClass("is-hidden")
+            } else {
+              $("#planned-trips-card").removeClass("is-hidden")
+            }
+          });
         });
 
       $(inProgressList)
@@ -162,6 +159,14 @@ $("#newTrip").on("click", async function (event) {
   sessionStorage.setItem("currentTripId", newTrip.data.id);
   // for testing purposes go to seach city
   window.location.replace("/searchcity");
+});
+
+$("#planned-trips-close").on("click", async function (event) {
+  event.preventDefault();
+  console.log("you clicked me!");
+  $("#planned-trips-confirm").removeClass("is-active");
+  $("#unfinished-trips-card").addClass("is-hidden");
+  $("#planned-trips-card").addClass("is-hidden");
 });
 
 //Add event listener for clicking on a trip
