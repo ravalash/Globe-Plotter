@@ -37,44 +37,44 @@ $.get("/api/trips")
         if (currentTrip.status == 0) {
           plannedList.append(
             '<div class="container" id="trip-card" data-TripId =' +
-            currentTrip.id +
-            "data-start-date =" +
-            currentTrip.start_date +
-            "data-end-date = " +
-            currentTrip.end_date +
-            "data-trip-name = " +
-            currentTrip.trip_name +
-            "> <h1><b>" +
-            currentTrip.trip_name +
-            "</b></h1> <p>" +
-            citiesList +
-            "</p> <p>" +
-            dates +
-            "</p></div>"
+              currentTrip.id +
+              ' data-start-date ="' +
+              currentTrip.start_date +
+              '" data-end-date = "' +
+              currentTrip.end_date +
+              '" data-trip-name = "' +
+              currentTrip.trip_name +
+              '"> <h1><b>' +
+              currentTrip.trip_name +
+              "</b></h1> <p>" +
+              citiesList +
+              "</p> <p>" +
+              dates +
+              "</p></div>"
           );
         } else if (currentTrip.status == 1) {
           inProgressList.append(
             '<div class="container" id="trip-card" data-TripId = ' +
-            currentTrip.id +
-            "> <h1><b>" +
-            currentTrip.trip_name +
-            "</b></h1> <p>" +
-            citiesList +
-            "</p> <p>" +
-            dates +
-            "</p></div>"
+              currentTrip.id +
+              "> <h1><b>" +
+              currentTrip.trip_name +
+              "</b></h1> <p>" +
+              citiesList +
+              "</p> <p>" +
+              dates +
+              "</p></div>"
           );
         } else if (currentTrip.status == 2) {
           completedList.append(
             '<div class="container" id="trip-card" data-TripId = ' +
-            currentTrip.id +
-            '> <h1><b>' +
-            currentTrip.trip_name +
-            "</b></h1> <p>" +
-            citiesList +
-            "</p> <p>" +
-            dates +
-            "</p></div>"
+              currentTrip.id +
+              "> <h1><b>" +
+              currentTrip.trip_name +
+              "</b></h1> <p>" +
+              citiesList +
+              "</p> <p>" +
+              dates +
+              "</p></div>"
           );
         }
       }
@@ -142,11 +142,11 @@ function citiesListGenerator(cities) {
 
 // converts YYYY-MM-DD format to Month Day, YYYY
 function datesGenerator(start_date, end_date) {
-  let startYear = start_date.split("-", 1)
-  startYear = parseInt(startYear)
-  let endYear = end_date.split("-", 1)
-  endYear = parseInt(endYear)
-  var startDate = ""
+  let startYear = start_date.split("-", 1);
+  startYear = parseInt(startYear);
+  let endYear = end_date.split("-", 1);
+  endYear = parseInt(endYear);
+  var startDate = "";
   if (startYear == endYear) {
     startDate = moment(start_date).format("MMMM D");
   } else startDate = moment(start_date).format("MMMM D, YYYY");
@@ -154,17 +154,18 @@ function datesGenerator(start_date, end_date) {
   return "From " + startDate + " to " + endDate;
 }
 
-
-
 function hideModal() {
   console.log("you clicked me!");
   $("#planned-trips-confirm").removeClass("is-active");
+  hideModalCards();
+}
+function hideModalCards() {
   $("#unfinished-trips-card").addClass("is-hidden");
   $("#planned-trips-card").addClass("is-hidden");
   $("#existing-trips-card").addClass("is-hidden");
   $("#completed-trips-card").addClass("is-hidden");
+  $("#cancel-trips-card").addClass("is-hidden");
 }
-
 
 async function addTrip(trip_name, start_date, end_date, status) {
   return new Promise(async function (resolve, reject) {
@@ -189,7 +190,7 @@ $("#newTrip").on("click", function (event) {
   window.location.replace("/edittrip");
 });
 
-$(".planned-trips-close").on("click", async function (event) {
+$(".planned-trips-close").on("click", function (event) {
   event.preventDefault();
   hideModal();
 });
@@ -215,31 +216,42 @@ $("#planned-trips-start").on("click", async function (event) {
   });
 });
 
-$("#planned-trips-edit").on("click", async function (event) {
+$("#planned-trips-edit").on("click", function (event) {
   event.preventDefault();
   hideModal();
   sessionStorage.setItem("currentTripId", clickedTrip.attr("data-tripid"));
   window.location.href = "/changetrip";
 });
 
-$("#planned-trips-continue").on("click", async function (event) {
+$("#planned-trips-continue").on("click", function (event) {
   event.preventDefault();
   hideModal();
   sessionStorage.setItem("currentTripId", clickedTrip.attr("data-tripid"));
   window.location.href = "/currenttrip";
 });
 
-$("#completed-trips-continue").on("click", async function (event) {
+$(".planned-trips-delete").on("click", function (event) {
+  event.preventDefault();
+  hideModalCards();
+  $("#cancel-trips-card").removeClass("is-hidden");
+});
+
+$("#delete-trip-cancel").on("click", function (event) {
+  event.preventDefault();
+  hideModal();
+});
+
+$("#delete-trip-confirm").on("click", async function (event) {
+  event.preventDefault();
+  hideModal();
+  console.log(clickedTrip.attr("data-tripid"));
+  await axios.delete(`/api/trip/${clickedTrip.attr("data-tripid")}`);
+  window.location.href = "/dashboard";
+});
+
+$("#completed-trips-continue").on("click", function (event) {
   event.preventDefault();
   hideModal();
   sessionStorage.setItem("currentTripId", clickedTrip.attr("data-tripid"));
   window.location.href = "/comptrip";
 });
-
-
-
-
-/* <button id="planned-trips-edit" class="card-footer-item">Edit Trip</button>
-<button id="planned-trips-delete" class="card-footer-item">Delete Trip</button> */
-
-//Add event listener for clicking on a trip

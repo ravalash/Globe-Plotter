@@ -28,7 +28,7 @@
             </div>
             <footer class="card-footer">
                 <button id="planned-trips-edit" class="card-footer-item">Edit Trip</button>
-                <button id="planned-trips-delete" class="card-footer-item">Delete Trip</button>
+                <button class="card-footer-item planned-trips-delete">Delete Trip</button>
                 <button id="planned-trips-back" class="card-footer-item planned-trips-close">Back</button>
             </footer>
         </div>
@@ -51,7 +51,7 @@
             <footer class="card-footer">
                 <button id="planned-trips-start" class="card-footer-item">Start Trip</button>
                 <button id="planned-trips-edit" class="card-footer-item">Edit Trip</button>
-                <button id="planned-trips-delete" class="card-footer-item">Delete Trip</button>
+                <button class="card-footer-item planned-trips-delete">Delete Trip</button>
                 <button class="card-footer-item planned-trips-close">Back</button>
             </footer>
         </div>
@@ -73,11 +73,11 @@
             </div>
             <footer class="card-footer">
                 <button id="planned-trips-continue" class="card-footer-item">Continue Trip</button>
-                <button id="planned-trips-delete" class="card-footer-item">Delete Trip</button>
+                <button class="card-footer-item planned-trips-delete">Delete Trip</button>
                 <button id="planned-trips-back" class="card-footer-item planned-trips-close">Back</button>
             </footer>
         </div>
-         <div class="card is-hidden" id="completed-trips-card">
+        <div class="card is-hidden" id="completed-trips-card">
             <header class="card-header">
                 <p class="card-header-title">
                     Confirm
@@ -90,13 +90,34 @@
             </header>
             <div class="card-content">
                 <div class="content">
-                Let your memory be your travel bag. Please choose an option from below.
+                    Let your memory be your travel bag. Please choose an option from below.
                 </div>
             </div>
             <footer class="card-footer">
                 <button id="completed-trips-continue" class="card-footer-item">Review Trip</button>
-                <button id="planned-trips-delete" class="card-footer-item">Delete Trip</button>
+                <button class="card-footer-item planned-trips-delete">Delete Trip</button>
                 <button id="planned-trips-back" class="card-footer-item planned-trips-close">Back</button>
+            </footer>
+        </div>
+        <div class="card is-hidden" id="cancel-trips-card">
+            <header class="card-header">
+                <p class="card-header-title">
+                    Confirm
+                </p>
+                <a href="#" class="card-header-icon" aria-label="more options">
+                    <span class="icon">
+                        <i class="fas fa-angle-down" aria-hidden="true"></i>
+                    </span>
+                </a>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                    All data associated with this trip will be deleted including cities and activities. Are you sure?
+                </div>
+            </div>
+            <footer class="card-footer">
+                <button id="delete-trip-cancel" class="card-footer-item planned-trips-close">No, Go Back!</button>
+                <button id="delete-trip-confirm" class="card-footer-item">Yes, Delete It!</button>
             </footer>
         </div>
 

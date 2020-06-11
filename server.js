@@ -17,12 +17,6 @@ var session = require("express-session");
 var passport = require("./config/passport");
 
 // Sets up the Express app to handle data parsing
-
-
-
-  require("dotenv").config();
-
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
