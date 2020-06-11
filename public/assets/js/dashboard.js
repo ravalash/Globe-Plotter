@@ -28,42 +28,51 @@ $.get("/api/trips")
         });
         if (currentTrip.cities.length != 0) {
           var citiesList = citiesListGenerator(currentTrip.cities);
-          var dates = datesGenerator(currentTrip.start_date, currentTrip.end_date)
+          var dates = datesGenerator(
+            currentTrip.start_date,
+            currentTrip.end_date
+          );
         }
         // Checks if trip is in edit, in progress, or compelte; sorts accordingly
         if (currentTrip.status == 0) {
           plannedList.append(
             '<div class="container" id="trip-card" data-TripId =' +
-            currentTrip.id +
-            "> <h1><b>" +
-            currentTrip.trip_name +
-            "</b></h1> <p>" +
-            citiesList +
-            "</p> <p>" +
-            dates +
-            "</p></div>"
+              currentTrip.id +
+              "data-start-date =" +
+              currentTrip.start_date +
+              "data-end-date = " +
+              currentTrip.end_date +
+              "data-trip-name = " +
+              currentTrip.trip_name +
+              "> <h1><b>" +
+              currentTrip.trip_name +
+              "</b></h1> <p>" +
+              citiesList +
+              "</p> <p>" +
+              dates +
+              "</p></div>"
           );
         } else if (currentTrip.status == 1) {
           inProgressList.append(
             '<div class="container" id="trip-card" data-TripId = ' +
-            currentTrip.id +
-            "> <h1><b>" +
-            currentTrip.trip_name +
-            "</b></h1> <p>" +
-            citiesList +
-            "</p> <p>" +
-            dates +
-            "</p></div>"
+              currentTrip.id +
+              "> <h1><b>" +
+              currentTrip.trip_name +
+              "</b></h1> <p>" +
+              citiesList +
+              "</p> <p>" +
+              dates +
+              "</p></div>"
           );
         } else if (currentTrip.status == 2) {
           completedList.append(
             '<div class="container" id="trip-card"> <h1><b>' +
-            currentTrip.trip_name +
-            "</b></h1> <p>" +
-            citiesList +
-            "</p> <p>" +
-            dates +
-            "</p></div>"
+              currentTrip.trip_name +
+              "</b></h1> <p>" +
+              citiesList +
+              "</p> <p>" +
+              dates +
+              "</p></div>"
           );
         }
       }
@@ -106,11 +115,11 @@ $.get("/api/trips")
 
 function citiesListGenerator(cities) {
   var remaining = cities.length - 2;
-  var citiesArray = []
+  var citiesArray = [];
   for (var i = 0; i < cities.length; i += 1) {
     var cityName = cities[i].city_name;
-    cityName = cityName.split(",", 1)
-    citiesArray.push(cityName)
+    cityName = cityName.split(",", 1);
+    citiesArray.push(cityName);
   }
   if (citiesArray.length == 1) {
     return citiesArray[0];
@@ -120,20 +129,15 @@ function citiesListGenerator(cities) {
     return citiesArray[0] + ", " + citiesArray[1] + " and 1 more";
   } else {
     return (
-      citiesArray[0] +
-      ", " +
-      citiesArray[1] +
-      " and " +
-      remaining +
-      " more"
+      citiesArray[0] + ", " + citiesArray[1] + " and " + remaining + " more"
     );
   }
 }
 
 function datesGenerator(start_date, end_date) {
-  var startDate = moment(start_date).format("MMMM D")
-  var endDate = moment(end_date).format("MMMM D, YYYY")
-  return ("From " + startDate + " to " + endDate)
+  var startDate = moment(start_date).format("MMMM D");
+  var endDate = moment(end_date).format("MMMM D, YYYY");
+  return "From " + startDate + " to " + endDate;
 }
 
 async function addTrip(trip_name, start_date, end_date, status) {
@@ -178,9 +182,12 @@ $("#planned-trips-start").on("click", async function (event) {
   $("#unfinished-trips-card").addClass("is-hidden");
   $("#planned-trips-card").addClass("is-hidden");
   const selectedId = clickedTrip.attr("data-tripid");
-  const trip_name = clickedTrip.children("h1").text();
-  const start_date = clickedTrip.children("p").eq(1).text().substring(5, 15);
-  const end_date = clickedTrip.children("p").eq(1).text().substring(19, 29);
+  const start_date = clickedTrip.attr("data-start-date");
+  const end_date = clickedTrip.attr("data-end-date");
+  const trip_name = clickedTrip.attr("data-trip-name");
+  // const trip_name = clickedTrip.children("h1").text();
+  // const start_date = clickedTrip.children("p").eq(1).text().substring(5, 15);
+  // const end_date = clickedTrip.children("p").eq(1).text().substring(19, 29);
   $.ajax({
     method: "PUT",
     url: `/api/trips/${selectedId}`,
@@ -205,11 +212,7 @@ $("#planned-trips-edit").on("click", async function (event) {
   window.location.href = "/changetrip";
 });
 
-
-
-
 /* <button id="planned-trips-edit" class="card-footer-item">Edit Trip</button>
 <button id="planned-trips-delete" class="card-footer-item">Delete Trip</button> */
-
 
 //Add event listener for clicking on a trip
