@@ -42,4 +42,8 @@ module.exports = function (app) {
   app.get("/comptrip", isAuthenticated, (req, res) => {
     res.render("comptrip");
   });
+
+  app.get("/changetrip", isAuthenticated, (req, res) => {
+    res.render("changetrip");
+  });
 };
