@@ -28,47 +28,42 @@ $.get("/api/trips")
         });
         if (currentTrip.cities.length != 0) {
           var citiesList = citiesListGenerator(currentTrip.cities);
+          var dates = datesGenerator(currentTrip.start_date, currentTrip.end_date)
         }
         // Checks if trip is in edit, in progress, or compelte; sorts accordingly
         if (currentTrip.status == 0) {
           plannedList.append(
             '<div class="container" id="trip-card" data-TripId =' +
-              currentTrip.id +
-              "> <h1><b>" +
-              currentTrip.trip_name +
-              "</b></h1> <p>" +
-              citiesList +
-              "</p> <p>From " +
-              currentTrip.start_date +
-              " to " +
-              currentTrip.end_date +
-              "</p></div>"
+            currentTrip.id +
+            "> <h1><b>" +
+            currentTrip.trip_name +
+            "</b></h1> <p>" +
+            citiesList +
+            "</p> <p>" +
+            dates +
+            "</p></div>"
           );
         } else if (currentTrip.status == 1) {
           inProgressList.append(
             '<div class="container" id="trip-card" data-TripId = ' +
-              currentTrip.id +
-              "> <h1><b>" +
-              currentTrip.trip_name +
-              "</b></h1> <p>" +
-              citiesList +
-              "</p> <p>From " +
-              currentTrip.start_date +
-              " to " +
-              currentTrip.end_date +
-              "</p></div>"
+            currentTrip.id +
+            "> <h1><b>" +
+            currentTrip.trip_name +
+            "</b></h1> <p>" +
+            citiesList +
+            "</p> <p>" +
+            dates +
+            "</p></div>"
           );
         } else if (currentTrip.status == 2) {
           completedList.append(
             '<div class="container" id="trip-card"> <h1><b>' +
-              currentTrip.trip_name +
-              "</b></h1> <p>" +
-              citiesList +
-              "</p> <p>From " +
-              currentTrip.start_date +
-              " to " +
-              currentTrip.end_date +
-              "</p></div>"
+            currentTrip.trip_name +
+            "</b></h1> <p>" +
+            citiesList +
+            "</p> <p>" +
+            dates +
+            "</p></div>"
           );
         }
       }
@@ -111,22 +106,34 @@ $.get("/api/trips")
 
 function citiesListGenerator(cities) {
   var remaining = cities.length - 2;
-  if (cities.length == 1) {
-    return cities[0].city_name;
+  var citiesArray = []
+  for (var i = 0; i < cities.length; i += 1) {
+    var cityName = cities[i].city_name;
+    cityName = cityName.split(",", 1)
+    citiesArray.push(cityName)
+  }
+  if (citiesArray.length == 1) {
+    return citiesArray[0];
   } else if (cities.length == 2) {
-    return cities[0].city_name + " and " + cities[1].city_name;
+    return citiesArray[0] + " and " + citiesArray[1];
   } else if (cities.length == 3) {
-    return cities[0].city_name + ", " + cities[1].city_name + " and 1 more";
+    return citiesArray[0] + ", " + citiesArray[1] + " and 1 more";
   } else {
     return (
-      cities[0].city_name +
+      citiesArray[0] +
       ", " +
-      cities[1].city_name +
+      citiesArray[1] +
       " and " +
       remaining +
       " more"
     );
   }
+}
+
+function datesGenerator(start_date, end_date) {
+  var startDate = moment(start_date).format("MMMM D")
+  var endDate = moment(end_date).format("MMMM D, YYYY")
+  return ("From " + startDate + " to " + endDate)
 }
 
 async function addTrip(trip_name, start_date, end_date, status) {
@@ -146,7 +153,7 @@ async function addTrip(trip_name, start_date, end_date, status) {
 }
 
 //Add event listener for new trip button
-$("#newTrip").on("click",  function (event) {
+$("#newTrip").on("click", function (event) {
   event.preventDefault();
   console.log("you clicked me!");
   // let newTrip = await addTrip("Joes trip", "2020-08-01", "2020-08-31", 0);
@@ -195,7 +202,7 @@ $("#planned-trips-edit").on("click", async function (event) {
   $("#unfinished-trips-card").addClass("is-hidden");
   $("#planned-trips-card").addClass("is-hidden");
   sessionStorage.setItem("currentTripId", clickedTrip.attr("data-tripid"));
-    window.location.href = "/changetrip";
+  window.location.href = "/changetrip";
 });
 
 
