@@ -6,6 +6,61 @@
     </div>
 </section>
 
+<div id="planned-trips-confirm" class="modal is-clipped">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <!-- Any other Bulma elements you want -->
+        <div class="card is-hidden" id = "unfinished-trips-card">
+            <header class="card-header">
+                <p class="card-header-title">
+                    Confirm
+                </p>
+                <a href="#" class="card-header-icon" aria-label="more options">
+                    <span class="icon">
+                        <i class="fas fa-angle-down" aria-hidden="true"></i>
+                    </span>
+                </a>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                    This trip has no activities planned yet and can not be started. Please choose an option from below.
+                </div>
+            </div>
+            <footer class="card-footer">
+                <a href="#" class="card-footer-item">Back</a>
+                <a href="#" class="card-footer-item">Edit Trip</a>
+                <a href="#" class="card-footer-item">Delete Trip</a>
+            </footer>
+        </div>
+        <div class="card is-hidden" id = "planned-trips-card">
+            <header class="card-header">
+                <p class="card-header-title">
+                    Confirm
+                </p>
+                <a href="#" class="card-header-icon" aria-label="more options">
+                    <span class="icon">
+                        <i class="fas fa-angle-down" aria-hidden="true"></i>
+                    </span>
+                </a>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                    Ready to go? Please choose an option from below.
+                </div>
+            </div>
+            <footer class="card-footer">
+                <a href="#" class="card-footer-item">Back</a>
+                <a href="#" class="card-footer-item">Start Trip</a>
+                <a href="#" class="card-footer-item">Edit Trip</a>
+                <a href="#" class="card-footer-item">Delete Trip</a>
+            </footer>
+        </div>
+
+
+    </div>
+    <button id="planned-trips-close" class="modal-close is-large" aria-label="close"></button>
+</div>
+
 <div class="columns trip-table">
     <div class="column">
         <h1>Planned Trips</h1>
