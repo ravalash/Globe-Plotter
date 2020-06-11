@@ -120,6 +120,7 @@ module.exports = function (app) {
     db.User.create({
       user_email: req.body.user_email,
       password: req.body.password,
+      user_name: req.body.user_name,
     })
       .then(function (result) {
         res.json(result);
@@ -166,6 +167,9 @@ module.exports = function (app) {
       image: req.body.image,
       yelp: req.body.yelp,
       status: req.body.status,
+      description: req.body.description,
+      address: req.body.address,
+      phone: req.body.phone,
       CityId: req.body.CityId,
       UserId: req.user.id,
     }).then(function (result) {
@@ -228,6 +232,7 @@ module.exports = function (app) {
       {
         user_email: req.body.user_email,
         password: req.body.password,
+        user_name: req.body.user_name,
       },
       {
         where: {
@@ -251,7 +256,7 @@ module.exports = function (app) {
       {
         where: {
           UserId: req.user.id,
-          id:req.params.id
+          id: req.params.id,
         },
       }
     ).then(function (result) {
@@ -289,6 +294,9 @@ module.exports = function (app) {
         image: req.body.image,
         yelp: req.body.yelp,
         status: req.body.status,
+        description: req.body.description,
+        address: req.body.address,
+        phone: req.body.phone,
         CityId: req.body.CityId,
       },
       {
