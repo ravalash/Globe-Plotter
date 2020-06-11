@@ -10,7 +10,7 @@
     <div class="modal-background"></div>
     <div class="modal-content">
         <!-- Any other Bulma elements you want -->
-        <div class="card is-hidden" id = "unfinished-trips-card">
+        <div class="card is-hidden" id="unfinished-trips-card">
             <header class="card-header">
                 <p class="card-header-title">
                     Confirm
@@ -27,12 +27,12 @@
                 </div>
             </div>
             <footer class="card-footer">
-                <a href="#" class="card-footer-item">Back</a>
-                <a href="#" class="card-footer-item">Edit Trip</a>
-                <a href="#" class="card-footer-item">Delete Trip</a>
+                <button id="planned-trips-edit" class="card-footer-item">Edit Trip</button>
+                <button id="planned-trips-delete" class="card-footer-item">Delete Trip</button>
+                <button id="planned-trips-back" class="card-footer-item planned-trips-close">Back</button>
             </footer>
         </div>
-        <div class="card is-hidden" id = "planned-trips-card">
+        <div class="card is-hidden" id="planned-trips-card">
             <header class="card-header">
                 <p class="card-header-title">
                     Confirm
@@ -49,16 +49,16 @@
                 </div>
             </div>
             <footer class="card-footer">
-                <a href="#" class="card-footer-item">Back</a>
-                <a href="#" class="card-footer-item">Start Trip</a>
-                <a href="#" class="card-footer-item">Edit Trip</a>
-                <a href="#" class="card-footer-item">Delete Trip</a>
+                <button id="planned-trips-start" class="card-footer-item">Start Trip</button>
+                <button id="planned-trips-edit" class="card-footer-item">Edit Trip</button>
+                <button id="planned-trips-delete" class="card-footer-item">Delete Trip</button>
+                <button class="card-footer-item planned-trips-close">Back</button>
             </footer>
         </div>
 
 
     </div>
-    <button id="planned-trips-close" class="modal-close is-large" aria-label="close"></button>
+    <button  class="modal-close is-large planned-trips-close" aria-label="close"></button>
 </div>
 
 <div class="columns trip-table">
