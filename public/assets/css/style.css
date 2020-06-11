@@ -20,7 +20,8 @@ h1 {
 }
 
 .wrapper {
-    text-align: center
+    text-align: center;
+    align-content: center
 }
 
 .middle {
@@ -203,22 +204,9 @@ path {
     fill: #fffeb3
 }
 
-#restaurants {
-    background-color: #00aedb;
+a {
+    color: lightblue
 }
-
-#drinks {
-    background-color: #a200ff	
-}
-
-#parks {
-    background-color: #8ec127;
-}
-
-#museums {
-    background-color: #f47835
-}
-
 #current-actions {
     margin-left: 10px
 }
@@ -246,6 +234,24 @@ path {
 #progress-card:hover {
     background-color: darkgreen;
     box-shadow: 2px 3px darkslategray;
+}
+
+#city-title {
+    align-self: center;
+    margin: 10px;
+    margin-left: 15%;
+    margin-right: 15%;
+    padding: 20px;
+    border-radius: 15px;
+    background-color: black;
+    border: 5px white solid;
+    color: white;
+    text-align: center;
+}
+
+.city-section {
+    margin-left: 15%;
+    margin-right: 15%;
 }
 
 #city-card {
