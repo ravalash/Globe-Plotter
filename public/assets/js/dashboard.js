@@ -146,14 +146,14 @@ async function addTrip(trip_name, start_date, end_date, status) {
 }
 
 //Add event listener for new trip button
-$("#newTrip").on("click", async function (event) {
+$("#newTrip").on("click",  function (event) {
   event.preventDefault();
   console.log("you clicked me!");
-  let newTrip = await addTrip("Joes trip", "2020-08-01", "2020-08-31", 0);
-  console.log(newTrip.data.id);
-  sessionStorage.setItem("currentTripId", newTrip.data.id);
+  // let newTrip = await addTrip("Joes trip", "2020-08-01", "2020-08-31", 0);
+  // console.log(newTrip.data.id);
+  // sessionStorage.setItem("currentTripId", newTrip.data.id);
   // for testing purposes go to seach city
-  window.location.replace("/searchcity");
+  window.location.replace("/edittrip");
 });
 
 $(".planned-trips-close").on("click", async function (event) {
