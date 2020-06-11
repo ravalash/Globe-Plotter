@@ -66,7 +66,9 @@ $.get("/api/trips")
           );
         } else if (currentTrip.status == 2) {
           completedList.append(
-            '<div class="container" id="trip-card"> <h1><b>' +
+            '<div class="container" id="trip-card" data-TripId = ' +
+            currentTrip.id +
+            '> <h1><b>' +
             currentTrip.trip_name +
             "</b></h1> <p>" +
             citiesList +
@@ -151,6 +153,7 @@ function datesGenerator(start_date, end_date) {
   var endDate = moment(end_date).format("MMMM D, YYYY");
   return "From " + startDate + " to " + endDate;
 }
+
 
 
 function hideModal() {

@@ -124,7 +124,7 @@ $(document).ready(function () {
 
                 //add a dropdown menu for each activity
                 newActHtml += `<div id="progress-card" data-state="hidden" class="activity">
-                <p>${activity.status === 0 ? "" : "<s>"}${activity.activity_name}${activity.status === 0 ? "" : "</s>"}</p>
+                <p>${activity.activity_name}</p>
                 <div hidden>
                     <div>
                         <img src="${activity.image}" alt="Image of ${activity.activity_name}" id="city-pic" style="margin-left:1%;"/>
@@ -151,6 +151,7 @@ $(document).ready(function () {
     //On click functions
     $("#citiesSection").on("click", async function (event) {
         event.preventDefault();
+        const button = $(event.target);
         if (button.attr("class") === "activity") {
             let state = button.attr("data-state");
             if (state === "hidden") {
