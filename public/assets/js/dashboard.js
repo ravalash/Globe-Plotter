@@ -98,8 +98,10 @@ $.get("/api/trips")
         .children("#trip-card")
         .click(function () {
           event.preventDefault();
-          sessionStorage.setItem("currentTripId", $(this).attr("data-tripid"));
-          window.location.href = "/currenttrip";
+          console.log("you clicked me!");
+          clickedTrip = $(this);
+          $("#planned-trips-confirm").addClass("is-active");
+          $("#existing-trips-card").removeClass("is-hidden");
         });
 
       $(completedList)
@@ -140,6 +142,16 @@ function datesGenerator(start_date, end_date) {
   return "From " + startDate + " to " + endDate;
 }
 
+function showModal() {}
+
+function hideModal() {
+  console.log("you clicked me!");
+  $("#planned-trips-confirm").removeClass("is-active");
+  $("#unfinished-trips-card").addClass("is-hidden");
+  $("#planned-trips-card").addClass("is-hidden");
+  $("#existing-trips-card").addClass("is-hidden");
+}
+
 async function addTrip(trip_name, start_date, end_date, status) {
   return new Promise(async function (resolve, reject) {
     try {
@@ -169,18 +181,12 @@ $("#newTrip").on("click", function (event) {
 
 $(".planned-trips-close").on("click", async function (event) {
   event.preventDefault();
-  console.log("you clicked me!");
-  $("#planned-trips-confirm").removeClass("is-active");
-  $("#unfinished-trips-card").addClass("is-hidden");
-  $("#planned-trips-card").addClass("is-hidden");
+  hideModal();
 });
 
 $("#planned-trips-start").on("click", async function (event) {
   event.preventDefault();
-  console.log("you clicked me!");
-  $("#planned-trips-confirm").removeClass("is-active");
-  $("#unfinished-trips-card").addClass("is-hidden");
-  $("#planned-trips-card").addClass("is-hidden");
+  hideModal();
   const selectedId = clickedTrip.attr("data-tripid");
   const start_date = clickedTrip.attr("data-start-date");
   const end_date = clickedTrip.attr("data-end-date");
@@ -204,12 +210,16 @@ $("#planned-trips-start").on("click", async function (event) {
 
 $("#planned-trips-edit").on("click", async function (event) {
   event.preventDefault();
-  console.log("you clicked me!");
-  $("#planned-trips-confirm").removeClass("is-active");
-  $("#unfinished-trips-card").addClass("is-hidden");
-  $("#planned-trips-card").addClass("is-hidden");
+  hideModal();
   sessionStorage.setItem("currentTripId", clickedTrip.attr("data-tripid"));
   window.location.href = "/changetrip";
+});
+
+$("#planned-trips-continue").on("click", async function (event) {
+  event.preventDefault();
+  hideModal();
+  sessionStorage.setItem("currentTripId", clickedTrip.attr("data-tripid"));
+  window.location.href = "/currenttrip";
 });
 
 /* <button id="planned-trips-edit" class="card-footer-item">Edit Trip</button>
