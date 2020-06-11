@@ -35,8 +35,8 @@ module.exports = function (sequelize, DataTypes) {
     });
     Trip.belongsTo(models.User, {
       foreignKey: {
-        allowNull: false,
-      },
+        allowNull: false, 
+      }, onDelete: 'cascade'
     });
   };
   return Trip;

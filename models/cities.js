@@ -2,7 +2,7 @@ module.exports = function (sequelize, DataTypes) {
   const City = sequelize.define("City", {
     city_name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
     },
     lat: {
       type: DataTypes.DECIMAL,
@@ -37,12 +37,13 @@ module.exports = function (sequelize, DataTypes) {
     City.belongsTo(models.Trip, {
       foreignKey: {
         allowNull: false,
-      },
+      }, onDelete: "cascade"
     });
     City.belongsTo(models.User, {
       foreignKey: {
         allowNull: false,
-      },
+        
+      }, onDelete: "cascade"
     });
   };
   return City;
