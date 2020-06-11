@@ -216,7 +216,7 @@ $("#planned-trips-start").on("click", async function (event) {
   });
 });
 
-$("#planned-trips-edit").on("click", function (event) {
+$(".planned-trips-edit").on("click", function (event) {
   event.preventDefault();
   hideModal();
   sessionStorage.setItem("currentTripId", clickedTrip.attr("data-tripid"));
