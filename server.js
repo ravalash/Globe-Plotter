@@ -32,8 +32,8 @@ app.use(express.static("public"));
 
 //set up handlebars
 var exphbs = require("express-handlebars");
-
-app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+console.log(exphbs);
+app.engine("handlebars", exphbs.engine({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
 // Routes
