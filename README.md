@@ -1,6 +1,6 @@
 # Globe Plotter
 ![Screenshot of Globe-Plotter by ravalash](./public/assets/screenshots/screen-1.gif)
-Globe Plotter is a unique travel planning application. Globe plotter takes users through a short, semi-curated planning phase, generates a checklist for users to view during their trip, and finally allows the user to view their previously completed trips and activities, serving as a kind of retrospective, or small, digital photo album. A link to the deployed version can be found [here.](http://theglobeplotter.com/)
+Globe Plotter is a unique travel planning application. Globe plotter takes users through a short, semi-curated planning phase, generates a checklist for users to view during their trip, and finally allows the user to view their previously completed trips and activities, serving as a kind of retrospective, or small, digital photo album. A link to the deployed version can be found [here.](https://globe-plotter-demo.herokuapp.com/)
 ## Table of Contents
 
 [Introduction](#introduction)  
